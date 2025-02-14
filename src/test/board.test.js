@@ -3,7 +3,7 @@ import { Ship } from '../components/ship.js'
 
 describe('Board', () => {
   describe("grid instantiation", () => {
-    xit("instantiates a 10x10 grid object with a-j row keys and 1-10 col keys", () => {
+    it("instantiates a 10x10 grid object with a-j row keys and 1-10 col keys", () => {
       const newBoard = new Board()
       const grid = newBoard.getGrid()
   
@@ -35,6 +35,11 @@ describe('Board', () => {
       expect(board.getCell('a4')).not.toBeNull()
       expect(board.getCell('a5')).not.toBeNull()
       expect(board.getCell('a6')).toBeNull()
+    })
+
+    it("will not place ship if coords are out of grid bounds", ()  => {
+      expect(() => { board.placeShip(carrier, "a8", "a12") }).
+        toThrowError("Can't place ship: a8 - a12 is out of grid")
     })
 
     // it("will not place a ship if cells are occupied", () => {
@@ -140,6 +145,36 @@ describe('Board', () => {
     
     it("returns the correct row id as a string", () => {
       expect(board.getCellCol('a10')).toEqual('10');
+    })
+  })
+
+  describe("outOfGrid", () => {
+    const board = new Board()
+    it("an in grid cell returns false", () => {
+      expect(board.outOfGrid('a1')).toBe(false)
+      expect(board.outOfGrid('k1')).toBe(true)
+      expect(board.outOfGrid('a11')).toBe(true)
+      expect(board.outOfGrid('z11')).toBe(true)
+      expect(board.outOfGrid('z1')).toBe(true)
+    })
+    
+    // it("an out grid cell returns true", () => {
+
+    // })
+  })
+
+  describe("cellsEmpty()", () => {
+    const board = new Board()
+    const carrier = new Ship(5)
+    board.placeShip(carrier, 'a1', 'a5')
+    const occupiedCells = ['a1', 'a2', 'a3']
+    const unOccupiedCells = ['b1', 'b2', 'b3']
+
+    it("returns true if all board cells are empty", () => {
+      expect(board.cellsEmpty(unOccupiedCells)).toBe(true)
+    })
+    it("returns false if any cells are occupied", () => {
+      expect(board.cellsEmpty(occupiedCells)).toBe(false)
     })
   })
 

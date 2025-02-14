@@ -37,8 +37,13 @@ export class Board {
   }
 
   placeShip(ship, startCell, endCell) {
-    this.addShip(ship);
+    if(this.outOfGrid(startCell) || this.outOfGrid(endCell)) {
+      throw new Error(`Can't place ship: ${startCell} - ${endCell} is out of grid`);
+    }
     const shipsCells = this.allShipsCells(startCell, endCell)
+    if(!this.cellsEmpty) { throw new Error(`Can't place ship as not all of its cells are empty`) }
+
+    this.addShip(ship);
     shipsCells.forEach((cell) => {
       this.setCell(ship.getId(), cell)
     })
@@ -95,12 +100,31 @@ export class Board {
         }
       }
     }
-    // console.log(shipsCells)
     return shipsCells
   }
 
-  inGrid() {
+  outOfGrid(cell) {
+    const row = this.getCellRow(cell)
+    const col = this.getCellCol(cell)
+    
+    if(row.charCodeAt(0) < 'a'.charCodeAt(0) || row.charCodeAt(0) > 'j'.charCodeAt(0)) {
+      return true
+    }
+    if(col < 1 || col > 10) {
+      return true
+    }
+    return false
+  }
 
+  cellsEmpty(cells) {
+    for(const cell of cells) {
+      const row = this.getCellRow(cell)
+      const col = this.getCellCol(cell)
+      if(this.#grid[row][col] != null) {
+        return false
+      }
+    }
+    return true
   }
 
   getCellRow(cell) {
