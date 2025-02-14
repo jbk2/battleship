@@ -2,6 +2,11 @@
 A JS implementation of the classic Battleship game built with TDD via Jest.
 
 ## Game Rules
+- 10x10 grid; x-axis 1-10 left>right, y-axis A-J top>bottom
+- 5 ships: Carrier (5), Battleship (4), Cruiser (3), Submarine (3), Destroyer (2)
+- Ships can be placed horizontally or vertically
+- Ships cannot overlap
+- Ships can be next to each other
 
 ## Technologies:
 - Jest
