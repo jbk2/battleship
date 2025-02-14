@@ -12,6 +12,12 @@ A JS implementation of the classic Battleship game built with TDD via Jest.
 - Jest
 - Webpack via NPM
 
+## Technical Implementation:
+- Board#grid is an object:
+  - containing in the 1st dimension 10 objects with keys named a - j (grid rows)
+  - within each of the 1st dimension objects is the 2nd dimension of 10 further objects
+    with keys named 1 - 10 (grid columns).
+
 ## Usage instructions:
 
 1. Clone the repository

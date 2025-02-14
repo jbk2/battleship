@@ -1,16 +1,27 @@
 import { Ship } from '../components/ship.js'
 
 describe("Ship", () => {
+  let carrier
   
   describe("instantiation", () => {
-    const carrier = new Ship(5);
+    beforeEach(() => {
+      Ship.shipCounter = 0
+      carrier = new Ship(5);
+    })
+
     it("should construct a new ship instance", () => {
       expect(carrier.getSize()).toBe(5);
+    })
+    
+    it("should have a unique Id", () => {
+      const battleShip = new Ship(4);
+      expect(carrier.getId()).toBe('ship-1');
+      expect(battleShip.getId()).not.toBe('ship-1');
+      expect(battleShip.getId()).toBe('ship-2');
     })
   })
   
   describe("hits", () => {
-    const carrier = new Ship(5);
     describe("when there are none", () => {
       it("getHits() returns an empty array", () => {
         expect(carrier.getHits()).toEqual(0);
@@ -25,7 +36,6 @@ describe("Ship", () => {
       })
       
       it("they cannot exceed the size of the ship", () => {
-        const carrier = new Ship(5);
         for (let i = 0; i < carrier.getSize(); i++) {
           carrier.hit();
         }

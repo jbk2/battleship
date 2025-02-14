@@ -8,7 +8,7 @@
     "build:dev": "webpack --mode=development",
     "serve": "webpack serve",
     "watch": "webpack --watch",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --silent=false"
   },
   "devDependencies": {
     "css-loader": "^7.1.2",

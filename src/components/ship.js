@@ -1,10 +1,17 @@
 export class Ship {
+  static shipCounter = 0
   #size
   #hits
+  #id
   
   constructor(size) {
     this.setSize(size)
     this.#hits = 0;
+    this.#id = `ship-${++Ship.shipCounter}`
+  }
+
+  getId() {
+    return this.#id
   }
 
   setSize(size) {
