@@ -25,3 +25,18 @@ A JS implementation of the classic Battleship game built with TDD via Jest.
 3. Run `npm run test` to run the tests
 4. Run `npm run serve` to start the development server.
 5. Open your browser and navigate to `http://localhost:8080/` to play the game.
+
+### Todos:
+
+- Abstract board code out to:
+  - CoordinatesHelper
+  - GridHelper
+  - ShipManager
+- Board > receiveAttack>
+  - success - record hit on board and on ship
+  - failure - record miss on board
+- Add the logic of cell selection on a turn | hot or miss check |
+- Add the concept of players | their turns | their boards
+- Add game play flow logic | ship fleet random layout |win checking
+- Add the UI for the game
+- Add the ability to play against the computer
