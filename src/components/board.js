@@ -1,3 +1,5 @@
+import { GridHelper } from './helpers/gridHelper.js'
+
 export class Board {
   #grid
   #ships = {}
@@ -36,12 +38,13 @@ export class Board {
     return this.#grid[y][x]
   }
 
+  // shipManager ?
   placeShip(ship, startCell, endCell) {
-    if(this.outOfGrid(startCell) || this.outOfGrid(endCell)) {
+    if(GridHelper.outOfGrid(startCell) || GridHelper.outOfGrid(endCell)) {
       throw new Error(`Can't place ship: ${startCell} - ${endCell} is out of grid`);
     }
-    const shipsCells = this.allShipsCells(startCell, endCell)
-    if(!this.cellsEmpty) { throw new Error(`Can't place ship as not all of its cells are empty`) }
+    const shipsCells = GridHelper.allShipsCells(startCell, endCell)
+    if(!GridHelper.cellsEmpty(shipsCells, this.getGrid())) { throw new Error(`Can't place ship as not all of its cells are empty`) }
 
     this.addShip(ship);
     shipsCells.forEach((cell) => {
@@ -62,54 +65,4 @@ export class Board {
     return this.#ships[id]
   }
 
-  allShipsCells(startCell, endCell) {
-    const shipsCells = []
-    const [startRow, endRow, startCol, endCol] = [this.getCellRow(startCell), this.getCellRow(endCell),
-      this.getCellCol(startCell), this.getCellCol(endCell)]
-      
-    if(startRow === endRow) { // horizontal placement
-      for(let col = Math.min(startCol, endCol); col <= Math.max(startCol, endCol); col++) {
-        shipsCells.push(`${startRow}${col}`)
-      }
-    } else if (startCol === endCol) { //verticalPlacement
-      for(let row = Math.min(startRow.charCodeAt(0), endRow.charCodeAt(0));
-        row <= Math.max(startRow.charCodeAt(0), endRow.charCodeAt(0));
-        row++) {
-          shipsCells.push(`${String.fromCharCode(row)}${startCol}`)
-      }
-    }
-    return shipsCells
-  }
-
-  outOfGrid(cell) {
-    const row = this.getCellRow(cell)
-    const col = this.getCellCol(cell)
-    
-    if(row.charCodeAt(0) < 'a'.charCodeAt(0) || row.charCodeAt(0) > 'j'.charCodeAt(0)) {
-      return true
-    }
-    if(col < 1 || col > 10) {
-      return true
-    }
-    return false
-  }
-
-  cellsEmpty(cells) {
-    for(const cell of cells) {
-      const row = this.getCellRow(cell)
-      const col = this.getCellCol(cell)
-      if(this.#grid[row][col] != null) {
-        return false
-      }
-    }
-    return true
-  }
-
-  getCellRow(cell) {
-    return cell[0]
-  }
-
-  getCellCol(cell) {
-    return cell.match(/\d+/g)[0]
-  }
 }
