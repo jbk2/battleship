@@ -38,7 +38,7 @@ export class Board {
     return this.#grid[y][x]
   }
 
-  // shipManager ?
+  // shipManager?
   placeShip(ship, startCell, endCell) {
     if(GridHelper.outOfGrid(startCell) || GridHelper.outOfGrid(endCell)) {
       throw new Error(`Can't place ship: ${startCell} - ${endCell} is out of grid`);

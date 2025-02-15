@@ -1,5 +1,6 @@
 import { GridHelper } from '../components/helpers/gridHelper.js'
 import { Board } from '../components/board.js'
+import { Ship } from '../components/ship.js'
 
 describe("allShipsCells", () => {
   const board = new Board()
@@ -119,15 +120,15 @@ describe("allShipsCells", () => {
   describe("cellsEmpty()", () => {
     const board = new Board()
     const carrier = new Ship(5)
-    GridHelper.placeShip(carrier, 'a1', 'a5')
+    board.placeShip(carrier, 'a1', 'a5')
     const occupiedCells = ['a1', 'a2', 'a3']
     const unOccupiedCells = ['b1', 'b2', 'b3']
 
     it("returns true if all board cells are empty", () => {
-      expect(GridHelper.cellsEmpty(unOccupiedCells)).toBe(true)
+      expect(GridHelper.cellsEmpty(unOccupiedCells, board.getGrid())).toBe(true)
     })
     it("returns false if any cells are occupied", () => {
-      expect(GridHelper.cellsEmpty(occupiedCells)).toBe(false)
+      expect(GridHelper.cellsEmpty(occupiedCells, board.getGrid())).toBe(false)
     })
   })
 
