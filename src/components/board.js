@@ -17,7 +17,7 @@ export class Board {
       this.#grid[row] = {};
       
       cols.forEach(col => {
-        this.#grid[row][col] = { shipId: null, attacked: null }
+        this.#grid[row][col] = { shipId: null, attacked: false }
       })
     })
   }
@@ -27,9 +27,7 @@ export class Board {
   }
 
   setCell(shipId, cell) {
-    this.#grid[cell[0]][cell[1]] = {
-      'shipId': shipId
-    }
+    this.#grid[cell[0]][cell[1]].shipId = shipId;
   }
 
   getCell(cell) {
@@ -67,7 +65,15 @@ export class Board {
     // (and whether the cell has been tried by competitor yet?)
   }
 
-  // receiveAttack() {
-
-  // }
+  receiveAttack(cell) {
+    const targetCell = this.getCell(cell)
+    targetCell.attacked = true
+    
+    if(targetCell.shipId != null) {
+      this.getShip(targetCell.shipId).hit()
+      return { hit: true }
+    } else {
+      return { hit: false }
+    }
+  }
 }

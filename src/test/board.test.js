@@ -82,16 +82,52 @@ describe("Board", () => {
     });
   });
 
-  // describe("receiveAttack()", () => {
-  //   describe("if a hit", () => {
-      // it("should call/return the hit function to the correct ship")
-      // it("if it were a hit should update the ships hit count")
-      // it("should record the cell as having been attacked")
+  describe("receiveAttack()", () => {
+    let board;
+    let carrier;
+
+    describe("if a hit", () => {
+      beforeEach(() => {
+        board = new Board();
+        carrier = new Ship(5);
+      })
       
-    // })
-    // describe("if a miss", () => {
+      it("should determine and return that it is a hit", () => {
+        board.placeShip(carrier, 'a1', 'a5')
+        expect(board.receiveAttack('a1')).toEqual({ hit: true })
+        const cellA1 = board.getCell('a1')
+        const shipInA1 = board.getShip(cellA1.shipId)
+      })
+
+      it("should record the cell as having been attacked", () => {
+        board.placeShip(carrier, 'a1', 'a5')
+        board.receiveAttack('a1')
+        expect(board.getCell('a1').attacked).toBe(true)
+      })
+
+      it("should update the correct ships hit count", () => {
+        board.placeShip(carrier, 'a1', 'a5')
+        board.receiveAttack('a1')
+        const cellA1 = board.getCell('a1')
+        const shipInA1 = board.getShip(cellA1.shipId)
+        expect(shipInA1.getHits()).toEqual(2)
+      })
+      
+    })
+    describe("if a miss", () => {
+      beforeEach(() => {
+        board = new Board();
+        carrier = new Ship(5);
+      })
+
+      it("should determine and return that it is a miss", () => {
+        board.placeShip(carrier, 'a1', 'a5')
+        expect(board.receiveAttack('a6')).toEqual({ hit: false })
+      })
       // it("should return whether the attach was a hit or a miss")
       // it("should record the cell as having been attacked")
-  //   })
-  // })
+    })
+
+    // cannot receive an attack on an already attacked (hot or miss) cell
+  })
 });
