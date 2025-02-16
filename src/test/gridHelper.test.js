@@ -134,9 +134,16 @@ describe("placementCells", () => {
     })
   })
 
-  // describe("diagnoal()", () => {
+  describe("diagnoal()", () => {
+    it("returns true if given diagonal cells", () => {
+      expect(GridHelper.diagonal('j10', 'h8')).toBe(true);
+    })
+    
+    it("returns false if given vertical or horizontal cells", () => {
+      expect(GridHelper.diagonal('j10', 'j8')).toBe(false);
+    })
 
-  // })
+  })
 
   // describe('shipAndPlacementSizeMatch()', () => {
 
