@@ -99,4 +99,15 @@ export class GridHelper {
     return randomLetter + randomNumber.toString()
   }
 
+  static getShipsCells(grid, shipId) {
+    const shipsCells = []
+    for(let row in grid) {
+      for(let col in grid[row]) {
+        // console.log(grid[row][col])
+        if(grid[row][col].shipId === shipId) {shipsCells.push(`${row}${col}`)}
+      }
+    }
+    return shipsCells
+  }
+
 }

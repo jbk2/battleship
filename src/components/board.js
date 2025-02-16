@@ -128,4 +128,14 @@ export class Board {
       return { hit: false }
     }
   }
+
+  fleetSunk() {
+    return false
+  }
+
+  // helper method to test fleetSunk
+  sinkShip(ship) {
+    const shipId = ship.getId()
+    const shipsCells = GridHelper.getShipsCells(this.getGrid(), shipId)
+  }
 }

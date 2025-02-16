@@ -168,4 +168,25 @@ describe("placementCells", () => {
     expect(withinRange).toBe(true)
   })
 
+  describe("getShipsCells", () => {
+    const board = new Board()
+    const carrier = new Ship(5)
+    board.placeShip(carrier, 'a1', 'a5')
+    const carrierId = carrier.getId()
+    const battleship = new Ship(4)
+    board.placeShip(battleship, 'c7', 'c10')
+    const battleshipId = battleship.getId()
+    const cruiser = new Ship(3)
+    board.placeShip(cruiser, 'j1', 'h1')
+    const cruiserId = cruiser.getId()
+
+    it("should return an array of the cells that the ship occupies", () => {
+      expect(GridHelper.getShipsCells(board.getGrid(), carrierId)).toEqual(['a1', 'a2', 'a3', 'a4', 'a5'])
+      expect(GridHelper.getShipsCells(board.getGrid(), battleshipId)).toEqual(['c7', 'c8', 'c9', 'c10'])
+      expect(GridHelper.getShipsCells(board.getGrid(), cruiserId)).toEqual(['h1', 'i1', 'j1'])
+    })
+
+
+  })
+
 })

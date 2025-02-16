@@ -152,7 +152,18 @@ describe("Board", () => {
       expect(Object.keys(newBoard.getShips()).length).toBe(5)
     })
   })
-
+  
   // check whether entire fleet is sunk.
+  describe("fleetSunk()", () => {
+    const newBoard = new Board();
+    newBoard.populateBoard();
+    it("returns false if not all ships on board are sunk", () => {
+      expect(newBoard.fleetSunk()).toEqual(false);
+    })
+    
+    it("returns true if all ships on board are sunk", () => {
+      expect(newBoard.fleetSunk()).toEqual(false);
+    })
+  })
 
 });
