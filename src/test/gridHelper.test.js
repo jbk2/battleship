@@ -134,7 +134,7 @@ describe("placementCells", () => {
     })
   })
 
-  describe("diagnoal()", () => {
+  describe("diagonal()", () => {
     it("returns true if given diagonal cells", () => {
       expect(GridHelper.diagonal('j10', 'h8')).toBe(true);
     })
@@ -144,9 +144,4 @@ describe("placementCells", () => {
     })
 
   })
-
-  // describe('shipAndPlacementSizeMatch()', () => {
-
-  // })
-
 })

@@ -38,48 +38,6 @@ export class Board {
     return this.#grid[y][x]
   }
 
-  // shipManager?
-  placeShip(ship, startCell, endCell) {
-    try {
-      const placementCells = GridHelper.placementCells(startCell, endCell)
-      
-      this.validPlacement(ship, startCell, endCell)
-      this.addShip(ship);
-      placementCells.forEach((cell) => {
-        this.setCell(ship.getId(), cell)
-      })
-      return { success: true, message: `Ship placed between ${startCell}-${endCell}`}
-    } catch (error) {
-      return  {success: false, message: error.message }
-    }
-    // update the boards cell with the ship ID
-    // (and whether the cell has been tried by competitor yet?)
-  }
-
-  validPlacement(ship, startCell, endCell) {
-    const errors = {
-      diagonal: `Can't place ship: ${startCell} - ${endCell} is diagonal positioning`,
-      outOfBounds: `Can't place ship: ${startCell} - ${endCell} is out of bounds`,
-      sizeMismatch: `Cell placement size does not equal ship size`,
-      occupied: `Can't place ship as not all of its cells are empty`
-    };
-
-    if(GridHelper.diagonal(startCell, endCell)) { throw new Error(errors.diagonal) }
-
-    if(GridHelper.outOfBounds(startCell) || GridHelper.outOfBounds(endCell)) {
-      throw new Error(errors.outOfBounds);
-    }
-
-    const placementCells = GridHelper.placementCells(startCell, endCell)
-
-    if(ship.getSize() != placementCells.length) { throw new Error(errors.sizeMismatch) }
-
-    if(GridHelper.occupied(placementCells, this.getGrid())) {
-      throw new Error(errors.occupied) }
-
-    return true
-  }
-
   addShip(ship) {
     this.#ships[ship.getId()] = ship
   }
@@ -92,4 +50,20 @@ export class Board {
     return this.#ships[id]
   }
 
+  // shipManager?
+  placeShip(ship, startCell, endCell) {
+    try {
+      const placementCells = GridHelper.placementCells(startCell, endCell)
+      GridHelper.validPlacement(this.getGrid(), ship, startCell, endCell)
+      this.addShip(ship);
+      placementCells.forEach((cell) => {
+        this.setCell(ship.getId(), cell)
+      })
+      return { success: true, message: `Ship placed between ${startCell}-${endCell}`}
+    } catch (error) {
+      return  {success: false, message: error.message }
+    }
+    // update the boards cell with the ship ID
+    // (and whether the cell has been tried by competitor yet?)
+  }
 }

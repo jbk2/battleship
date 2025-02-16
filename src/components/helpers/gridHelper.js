@@ -1,5 +1,4 @@
 export class GridHelper {
-  
   static placementCells(startCell, endCell) {
   const shipsCells = []
   const [startRow, endRow, startCol, endCol] = [GridHelper.getCellRow(startCell), GridHelper.getCellRow(endCell),
@@ -17,6 +16,30 @@ export class GridHelper {
       }
     }
     return shipsCells
+  }
+
+  static validPlacement(grid, ship, startCell, endCell) {
+    const errors = {
+      diagonal: `Can't place ship: ${startCell} - ${endCell} is diagonal positioning`,
+      outOfBounds: `Can't place ship: ${startCell} - ${endCell} is out of bounds`,
+      sizeMismatch: `Cell placement size does not equal ship size`,
+      occupied: `Can't place ship as not all of its cells are empty`
+    };
+
+    if(GridHelper.diagonal(startCell, endCell)) { throw new Error(errors.diagonal) }
+
+    if(GridHelper.outOfBounds(startCell) || GridHelper.outOfBounds(endCell)) {
+      throw new Error(errors.outOfBounds);
+    }
+
+    const placementCells = GridHelper.placementCells(startCell, endCell)
+
+    if(ship.getSize() != placementCells.length) { throw new Error(errors.sizeMismatch) }
+
+    if(GridHelper.occupied(placementCells, grid)) {
+      throw new Error(errors.occupied) }
+
+    return true
   }
     
   static outOfBounds(cell) {
