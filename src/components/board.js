@@ -1,4 +1,5 @@
 import { GridHelper } from './helpers/gridHelper.js'
+import { Ship } from './ship.js'
 
 export class Board {
   #grid
@@ -27,13 +28,15 @@ export class Board {
   }
 
   setCell(shipId, cell) {
-    this.#grid[cell[0]][cell[1]].shipId = shipId;
+    const row = cell[0]
+    const col = cell.slice(1)
+    this.#grid[row][col].shipId = shipId;
   }
 
   getCell(cell) {
-    const y = cell[0]
-    const x = cell[1]
-    return this.#grid[y][x]
+    const row = cell[0]
+    const col = cell.slice(1)
+    return this.#grid[row][col]
   }
 
   addShip(ship) {
@@ -48,18 +51,66 @@ export class Board {
     return this.#ships[id]
   }
 
+  populateBoard() {
+    const shipSizes = [5, 4, 3, 3, 2]
+    const ships = Array.from(shipSizes, size => new Ship(size))
+    
+    ships.forEach(ship => {
+      let placed = false
+  
+      while(!placed) {
+        const startCell = GridHelper.getRandomCell();
+        const startRow = startCell[0]
+        const startCol = Number(startCell.slice(1))
+        const shipLength = ship.getSize()
+        const directions = ['up', 'right', 'down', 'left']
+        const direction = directions[Math.floor(Math.random() * 4)]
+        let endRow, endCol
+
+        switch (direction) {
+          case 'up':
+            endRow = String.fromCharCode(startRow.charCodeAt(0) - (shipLength - 1))
+            endCol = startCol
+            break
+          case 'right':
+            endRow = startRow
+            endCol = startCol + (shipLength - 1)
+            break
+          case 'down':
+            endRow = String.fromCharCode(startRow.charCodeAt(0) + (shipLength - 1))
+            endCol = startCol
+            break
+          case 'left':
+            endRow = startRow
+            endCol = startCol - (shipLength - 1)
+            break
+        }
+
+        const endCell = endRow + endCol.toString()
+        try {
+          GridHelper.validPlacement(this.getGrid(), ship, startCell, endCell)
+          this.placeShip(ship, startCell, endCell)
+          placed = true
+        } catch (error) {
+          // console.log("error found, but caught and trying to validly place a ship again", error)
+        }
+      }
+    })
+  }
+
   // shipManager?
   placeShip(ship, startCell, endCell) {
     try {
-      const placementCells = GridHelper.placementCells(startCell, endCell)
       GridHelper.validPlacement(this.getGrid(), ship, startCell, endCell)
+      const placementCells = GridHelper.placementCells(startCell, endCell)
       this.addShip(ship);
       placementCells.forEach((cell) => {
         this.setCell(ship.getId(), cell)
       })
       return { success: true, message: `Ship placed between ${startCell}-${endCell}`}
     } catch (error) {
-      return  {success: false, message: error.message }
+      // console.error(`Error placing ship ${ship.getId()} at ${startCell} - ${endCell}:`, error.message)
+      throw Error(`Error placing ship ${ship.getId()} at ${startCell} - ${endCell}: ${error.message}`)
     }
     // update the boards cell with the ship ID
     // (and whether the cell has been tried by competitor yet?)
@@ -67,6 +118,7 @@ export class Board {
 
   receiveAttack(cell) {
     const targetCell = this.getCell(cell)
+    if(targetCell.attacked) throw new Error("cell has already been attacked")
     targetCell.attacked = true
     
     if(targetCell.shipId != null) {

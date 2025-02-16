@@ -79,4 +79,24 @@ export class GridHelper {
   static getCellCol(cell) {
     return cell.match(/\d+/g)[0]
   }
+
+  static getEmptyCells(grid) {
+    // console.log(grid)
+    const emptyCells = []
+    for(const [row, columns] of Object.entries(grid)) {
+      for(const [col, cell] of Object.entries(columns)) {
+        if(cell.shipId === null) { emptyCells.push(cell) } 
+        // emptyCells.push(`Cell: ${row}${col}, Attacked: ${cell.attacked}, Ship ID: ${cell.shipId}`);
+      }
+    }
+    return emptyCells  
   }
+
+  static getRandomCell() {
+    const letters = "abcdefghij"
+    const randomLetter = letters[Math.floor(Math.random() * letters.length)]
+    const randomNumber = Math.floor(Math.random() * 10) + 1
+    return randomLetter + randomNumber.toString()
+  }
+
+}

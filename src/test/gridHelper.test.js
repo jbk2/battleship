@@ -3,9 +3,9 @@ import { Board } from '../components/board.js'
 import { Ship } from '../components/ship.js'
 
 describe("placementCells", () => {
-  const board = new Board()
   
   describe("for a ship laid vertically", () => {
+    const board = new Board()
     describe("for a ship of size 5 cells", () => {
       it("returns all of the cells between the two given cells", () => {
         const cells = GridHelper.placementCells('a1', 'e1')
@@ -142,6 +142,30 @@ describe("placementCells", () => {
     it("returns false if given vertical or horizontal cells", () => {
       expect(GridHelper.diagonal('j10', 'j8')).toBe(false);
     })
-
   })
+
+  describe("getEmptyCells()", () => {
+    const board = new Board()
+    const carrier = new Ship(5)
+    const battleship = new Ship(4)
+    const cruiser = new Ship(3)
+    board.placeShip(carrier, 'a1', 'a5')
+    board.placeShip(battleship, 'c7', 'c10')
+    board.placeShip(cruiser, 'j1', 'h1')
+    
+    it("returns an array of all empty cells", () => {
+      expect(GridHelper.getEmptyCells(board.getGrid()).length).toBe(88);
+      const submarine = new Ship(3)
+      board.placeShip(submarine, 'e1', 'e3')
+      expect(GridHelper.getEmptyCells(board.getGrid()).length).toBe(85);
+    })
+  })
+
+  describe("getRandomCell()", () => {
+    const randCell = GridHelper.getRandomCell()
+    expect(randCell[0]).toMatch(/[a-j]/)
+    const withinRange = randCell.slice(1) >= 1 && randCell.slice(1) <= 10
+    expect(withinRange).toBe(true)
+  })
+
 })
