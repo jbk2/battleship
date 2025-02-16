@@ -40,9 +40,26 @@ export class Board {
 
   // shipManager?
   placeShip(ship, startCell, endCell) {
+    try {
+      const placementCells = GridHelper.placementCells(startCell, endCell)
+      
+      this.validPlacement(ship, startCell, endCell)
+      this.addShip(ship);
+      placementCells.forEach((cell) => {
+        this.setCell(ship.getId(), cell)
+      })
+      return { success: true, message: `Ship placed between ${startCell}-${endCell}`}
+    } catch (error) {
+      return  {success: false, message: error.message }
+    }
+    // update the boards cell with the ship ID
+    // (and whether the cell has been tried by competitor yet?)
+  }
+
+  validPlacement(ship, startCell, endCell) {
     const errors = {
       diagonal: `Can't place ship: ${startCell} - ${endCell} is diagonal positioning`,
-      outOfBounds: `Can't place ship: ${startCell} - ${endCell} is out of grid`,
+      outOfBounds: `Can't place ship: ${startCell} - ${endCell} is out of bounds`,
       sizeMismatch: `Cell placement size does not equal ship size`,
       occupied: `Can't place ship as not all of its cells are empty`
     };
@@ -52,20 +69,15 @@ export class Board {
     if(GridHelper.outOfBounds(startCell) || GridHelper.outOfBounds(endCell)) {
       throw new Error(errors.outOfBounds);
     }
-    
-    const shipsCells = GridHelper.allShipsCells(startCell, endCell)
 
-    if(ship.getSize() != shipsCells.length) { throw new Error(errors.sizeMismatch) }
+    const placementCells = GridHelper.placementCells(startCell, endCell)
 
-    if(GridHelper.occupied(shipsCells, this.getGrid())) {
+    if(ship.getSize() != placementCells.length) { throw new Error(errors.sizeMismatch) }
+
+    if(GridHelper.occupied(placementCells, this.getGrid())) {
       throw new Error(errors.occupied) }
 
-    this.addShip(ship);
-    shipsCells.forEach((cell) => {
-      this.setCell(ship.getId(), cell)
-    })
-    // update the boards cell with the ship ID
-    // (and whether the cell has been tried by competitor yet?)
+    return true
   }
 
   addShip(ship) {

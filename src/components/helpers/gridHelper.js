@@ -1,6 +1,6 @@
 export class GridHelper {
   
-  static allShipsCells(startCell, endCell) {
+  static placementCells(startCell, endCell) {
   const shipsCells = []
   const [startRow, endRow, startCol, endCol] = [GridHelper.getCellRow(startCell), GridHelper.getCellRow(endCell),
     GridHelper.getCellCol(startCell), GridHelper.getCellCol(endCell)]

@@ -2,43 +2,43 @@ import { GridHelper } from '../components/helpers/gridHelper.js'
 import { Board } from '../components/board.js'
 import { Ship } from '../components/ship.js'
 
-describe("allShipsCells", () => {
+describe("placementCells", () => {
   const board = new Board()
   
   describe("for a ship laid vertically", () => {
     describe("for a ship of size 5 cells", () => {
       it("returns all of the cells between the two given cells", () => {
-        const cells = GridHelper.allShipsCells('a1', 'e1')
+        const cells = GridHelper.placementCells('a1', 'e1')
         expect(cells).toEqual(['a1', 'b1', 'c1', 'd1', 'e1'])
       })
     })
     describe("for a ship of size 3 cells", () => {
       it("returns all of the cells between the two given cells", () => {
-        const cells = GridHelper.allShipsCells('a1', 'c1')
+        const cells = GridHelper.placementCells('a1', 'c1')
         expect(cells).toEqual(['a1', 'b1', 'c1'])
       })
     })
     describe("for a ship of size 1 cells", () => {
       it("returns all of the cells between the two given cells", () => {
-        const cells = GridHelper.allShipsCells('a1', 'b1')
+        const cells = GridHelper.placementCells('a1', 'b1')
         expect(cells).toEqual(['a1', 'b1'])
       })
     })
     describe("for a ship of size 5 cells", () => {
       it("returns all of the cells between the two given cells", () => {
-        const cells = GridHelper.allShipsCells('e4', 'a4')
+        const cells = GridHelper.placementCells('e4', 'a4')
         expect(cells).toEqual(['a4', 'b4', 'c4', 'd4', 'e4'])
       })
     })
     describe("for a ship of size 3 cells", () => {
       it("returns all of the cells between the two given cells", () => {
-        const cells = GridHelper.allShipsCells('c9', 'a9')
+        const cells = GridHelper.placementCells('c9', 'a9')
         expect(cells).toEqual(['a9', 'b9', 'c9'])
       })
     })
     describe("for a ship of size 1 cells", () => {
       it("returns all of the cells between the two given cells", () => {
-        const cells = GridHelper.allShipsCells('b10', 'a10')
+        const cells = GridHelper.placementCells('b10', 'a10')
         expect(cells).toEqual(['a10', 'b10'])
       })
     })
@@ -47,37 +47,37 @@ describe("allShipsCells", () => {
   describe("for a ship laid horizontally", () => {
     describe("for a ship of size 5 cells", () => {
       it("returns all of the cells between the two given cells", () => {
-        const cells = GridHelper.allShipsCells('a1', 'a5')
+        const cells = GridHelper.placementCells('a1', 'a5')
         expect(cells).toEqual(['a1', 'a2', 'a3', 'a4', 'a5'])
       })
     })
     describe("for a ship of size 3 cells", () => {
       it("returns all of the cells between the two given cells", () => {
-        const cells = GridHelper.allShipsCells('a1', 'a3')
+        const cells = GridHelper.placementCells('a1', 'a3')
         expect(cells).toEqual(['a1', 'a2', 'a3'])
       })
     })
     describe("for a ship of size 2 cells", () => {
       it("returns all of the cells between the two given cells", () => {
-        const cells = GridHelper.allShipsCells('a1', 'a2')
+        const cells = GridHelper.placementCells('a1', 'a2')
         expect(cells).toEqual(['a1', 'a2'])
       })
     })
     describe("for a ship of size 5 cells", () => {
       it("returns all of the cells between the two given cells", () => {
-        const cells = GridHelper.allShipsCells('e5', 'e1')
+        const cells = GridHelper.placementCells('e5', 'e1')
         expect(cells).toEqual(['e1', 'e2', 'e3', 'e4', 'e5'])
       })
     })
     describe("for a ship of size 3 cells", () => {
       it("returns all of the cells between the two given cells", () => {
-        const cells = GridHelper.allShipsCells('b3', 'b1')
+        const cells = GridHelper.placementCells('b3', 'b1')
         expect(cells).toEqual(['b1', 'b2', 'b3'])
       })
     })
     describe("for a ship of size 2 cells", () => {
       it("returns all of the cells between the two given cells", () => {
-        const cells = GridHelper.allShipsCells('j2', 'j1')
+        const cells = GridHelper.placementCells('j2', 'j1')
         expect(cells).toEqual(['j1', 'j2'])
       })
     })
