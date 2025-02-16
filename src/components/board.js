@@ -40,17 +40,32 @@ export class Board {
 
   // shipManager?
   placeShip(ship, startCell, endCell) {
-    if(GridHelper.outOfGrid(startCell) || GridHelper.outOfGrid(endCell)) {
-      throw new Error(`Can't place ship: ${startCell} - ${endCell} is out of grid`);
+    const errors = {
+      diagonal: `Can't place ship: ${startCell} - ${endCell} is diagonal positioning`,
+      outOfBounds: `Can't place ship: ${startCell} - ${endCell} is out of grid`,
+      sizeMismatch: `Cell placement size does not equal ship size`,
+      occupied: `Can't place ship as not all of its cells are empty`
+    };
+
+    if(GridHelper.diagonal(startCell, endCell)) { throw new Error(errors.diagonal) }
+
+    if(GridHelper.outOfBounds(startCell) || GridHelper.outOfBounds(endCell)) {
+      throw new Error(errors.outOfBounds);
     }
+    
     const shipsCells = GridHelper.allShipsCells(startCell, endCell)
-    if(!GridHelper.cellsEmpty(shipsCells, this.getGrid())) { throw new Error(`Can't place ship as not all of its cells are empty`) }
+
+    if(ship.getSize() != shipsCells.length) { throw new Error(errors.sizeMismatch) }
+
+    if(GridHelper.occupied(shipsCells, this.getGrid())) {
+      throw new Error(errors.occupied) }
 
     this.addShip(ship);
     shipsCells.forEach((cell) => {
       this.setCell(ship.getId(), cell)
     })
-    // update the baords cell with the ship ID (and whether the cell has been tried by competitor yet?)
+    // update the boards cell with the ship ID
+    // (and whether the cell has been tried by competitor yet?)
   }
 
   addShip(ship) {

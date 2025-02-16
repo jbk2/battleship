@@ -102,22 +102,24 @@ describe("allShipsCells", () => {
     })
   })
 
-  describe("outOfGrid", () => {
+  describe("outOfBounds", () => {
     const board = new Board()
     it("an in grid cell returns false", () => {
-      expect(GridHelper.outOfGrid('a1')).toBe(false)
-      expect(GridHelper.outOfGrid('k1')).toBe(true)
-      expect(GridHelper.outOfGrid('a11')).toBe(true)
-      expect(GridHelper.outOfGrid('z11')).toBe(true)
-      expect(GridHelper.outOfGrid('z1')).toBe(true)
+      expect(GridHelper.outOfBounds('a1')).toBe(false)
+      expect(GridHelper.outOfBounds('a10')).toBe(false)
+      expect(GridHelper.outOfBounds('j1')).toBe(false)
+      expect(GridHelper.outOfBounds('j10')).toBe(false)
     })
     
-    // it("an out grid cell returns true", () => {
-
-    // })
+    it("an out grid cell returns true", () => {
+      expect(GridHelper.outOfBounds('k1')).toBe(true)
+      expect(GridHelper.outOfBounds('k10')).toBe(true)
+      expect(GridHelper.outOfBounds('z1')).toBe(true)
+      expect(GridHelper.outOfBounds('z11')).toBe(true)
+    })
   })
 
-  describe("cellsEmpty()", () => {
+  describe("occupied()", () => {
     const board = new Board()
     const carrier = new Ship(5)
     board.placeShip(carrier, 'a1', 'a5')
@@ -125,11 +127,19 @@ describe("allShipsCells", () => {
     const unOccupiedCells = ['b1', 'b2', 'b3']
 
     it("returns true if all board cells are empty", () => {
-      expect(GridHelper.cellsEmpty(unOccupiedCells, board.getGrid())).toBe(true)
+      expect(GridHelper.occupied(unOccupiedCells, board.getGrid())).toBe(false)
     })
     it("returns false if any cells are occupied", () => {
-      expect(GridHelper.cellsEmpty(occupiedCells, board.getGrid())).toBe(false)
+      expect(GridHelper.occupied(occupiedCells, board.getGrid())).toBe(true)
     })
   })
+
+  // describe("diagnoal()", () => {
+
+  // })
+
+  // describe('shipAndPlacementSizeMatch()', () => {
+
+  // })
 
 })

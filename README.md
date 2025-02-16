@@ -29,9 +29,7 @@ A JS implementation of the classic Battleship game built with TDD via Jest.
 ### Todos:
 
 - Abstract board code out to:
-  - CoordinatesHelper
-  - GridHelper
-  - ShipManager
+  - ShipManager (?)
 - Board > receiveAttack>
   - success - record hit on board and on ship
   - failure - record miss on board

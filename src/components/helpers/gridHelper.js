@@ -19,7 +19,7 @@ export class GridHelper {
     return shipsCells
   }
     
-  static outOfGrid(cell) {
+  static outOfBounds(cell) {
     const row = GridHelper.getCellRow(cell)
     const col = GridHelper.getCellCol(cell)
     
@@ -31,16 +31,22 @@ export class GridHelper {
     }
     return false
   }
+
+  static diagonal(startCell, endCell) {
+    const [startRow, endRow, startCol, endCol] = [GridHelper.getCellRow(startCell), GridHelper.getCellRow(endCell),
+      GridHelper.getCellCol(startCell), GridHelper.getCellCol(endCell)]
+    return startRow !== endRow && startCol !== endCol 
+  }
   
-  static cellsEmpty(cells, grid) {
+  static occupied(cells, grid) {
     for(const cell of cells) {
       const row = GridHelper.getCellRow(cell)
       const col = GridHelper.getCellCol(cell)
       if(grid[row][col] != null) {
-        return false
+        return true
       }
     }
-    return true
+    return false
   }
     
   static getCellRow(cell) {
