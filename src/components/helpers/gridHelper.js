@@ -65,7 +65,7 @@ export class GridHelper {
     for(const cell of cells) {
       const row = GridHelper.getCellRow(cell)
       const col = GridHelper.getCellCol(cell)
-      if(grid[row][col] != null) {
+      if(grid[row][col].shipId != null) {
         return true
       }
     }

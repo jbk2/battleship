@@ -17,7 +17,7 @@ export class Board {
       this.#grid[row] = {};
       
       cols.forEach(col => {
-        this.#grid[row][col] = null
+        this.#grid[row][col] = { shipId: null, attacked: null }
       })
     })
   }
@@ -66,4 +66,8 @@ export class Board {
     // update the boards cell with the ship ID
     // (and whether the cell has been tried by competitor yet?)
   }
+
+  // receiveAttack() {
+
+  // }
 }

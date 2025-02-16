@@ -11,7 +11,7 @@ describe("Board", () => {
       Object.keys(grid).forEach((row) => {
         expect(Object.keys(grid[row]).length).toBe(10);
         Object.keys(grid[row]).forEach((col) => {
-          expect(grid[row][col]).toBeNull();
+          expect(grid[row][col].shipId).toBeNull();
         });
       });
     });
@@ -34,13 +34,13 @@ describe("Board", () => {
     it("can place a ship if cells are unoccupied", () => {
       expect(board.placeShip(carrier, "a1", "a5"))
         .toEqual({message: "Ship placed between a1-a5", success: true})
-      expect(board.getCell("a1")).not.toBeNull();
-      expect(board.getCell("a1")).toEqual({ shipId: carrier.getId() });
-      expect(board.getCell("a2")).not.toBeNull();
-      expect(board.getCell("a3")).not.toBeNull();
-      expect(board.getCell("a4")).not.toBeNull();
-      expect(board.getCell("a5")).not.toBeNull();
-      expect(board.getCell("a6")).toBeNull();
+      expect(board.getCell("a1").shipId).not.toBeNull();
+      expect(board.getCell("a1").shipId).toEqual(carrier.getId());
+      expect(board.getCell("a2").shipId).not.toBeNull();
+      expect(board.getCell("a3").shipId).not.toBeNull();
+      expect(board.getCell("a4").shipId).not.toBeNull();
+      expect(board.getCell("a5").shipId).not.toBeNull();
+      expect(board.getCell("a6").shipId).toBeNull();
     });
 
     it("will not place ship if coords are out of grid bounds", () => {
@@ -81,4 +81,17 @@ describe("Board", () => {
       );
     });
   });
+
+  // describe("receiveAttack()", () => {
+  //   describe("if a hit", () => {
+      // it("should call/return the hit function to the correct ship")
+      // it("if it were a hit should update the ships hit count")
+      // it("should record the cell as having been attacked")
+      
+    // })
+    // describe("if a miss", () => {
+      // it("should return whether the attach was a hit or a miss")
+      // it("should record the cell as having been attacked")
+  //   })
+  // })
 });
