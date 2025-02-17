@@ -28,6 +28,11 @@ A JS implementation of the classic Battleship game built with TDD via Jest.
 
 ### Todos:
 
+- refactor displayBoard()
+- introduce game and turns
+- introduce computer turn taking driver logic
+  - do we simulate clicks also, therefore using same display logic as human player,
+  or do we have a separate engine which just calls back end methods?
 - Add the logic of cell selection on a turn | hot or miss check |
 - Add the concept of players | their turns | their boards
 - Add game play flow logic | ship fleet random layout |win checking
