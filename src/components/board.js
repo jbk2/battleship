@@ -134,8 +134,14 @@ export class Board {
   }
 
   // helper method to test fleetSunk
-  sinkShip(ship) {
-    const shipId = ship.getId()
+  sinkShip(shipId) {
     const shipsCells = GridHelper.getShipsCells(this.getGrid(), shipId)
+    shipsCells.forEach(cell => {
+      this.receiveAttack(cell)
+    })
   }
+
+  
+
+
 }

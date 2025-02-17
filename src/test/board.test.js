@@ -153,6 +153,30 @@ describe("Board", () => {
     })
   })
   
+  describe("sinkShip()", () => {
+    it("should hit all cells of a ship, carrier example", () => {
+      const board = new Board();
+      const carrier = new Ship(5);
+      board.placeShip(carrier, 'a1', 'a5');
+      expect(carrier.getHits()).toBe(0);
+      expect(carrier.isSunk()).toBe(false);
+      board.sinkShip(carrier.getId());
+      expect(carrier.getHits()).toBe(5);
+      expect(carrier.isSunk()).toBe(true);
+    })
+    
+    it("should hit all cells of a ship, submarine example", () => {
+      const board = new Board();
+      const submarine = new Ship(3);
+      board.placeShip(submarine, 'j1', 'j3');
+      expect(submarine.getHits()).toBe(0);
+      expect(submarine.isSunk()).toBe(false);
+      board.sinkShip(submarine.getId());
+      expect(submarine.getHits()).toBe(3);
+      expect(submarine.isSunk()).toBe(true);
+    })
+  })
+  
   // check whether entire fleet is sunk.
   describe("fleetSunk()", () => {
     const newBoard = new Board();
