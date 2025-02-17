@@ -11,12 +11,16 @@ function init() {
   const humanPlayer = new Player('human');
   const computerPlayer = new Player('computer');
   // populate their boards
-  humanPlayer.getBoard().populateBoard()
-  computerPlayer.getBoard().populateBoard()
+  const humansBoard = humanPlayer.getBoard()
+  const computersBoard = computerPlayer.getBoard()
+  humansBoard.populateBoard()
+  computersBoard.populateBoard()
   // display boards
-  UIController.displayBoard(humanPlayer.getBoard(), 'human')
-  UIController.displayBoard(computerPlayer.getBoard(), 'computer')
+  UIController.displayBoard(humansBoard, 'human')
+  UIController.displayBoard(computersBoard, 'computer')
   // commence game
+  // - add event listeners to computer board:
+  // UIController.addComputerBoardListeners(computersBoard)
     // - display turn
     // - enable turn
     // - calculate winner
