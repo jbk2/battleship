@@ -118,7 +118,7 @@ export class Board {
 
   receiveAttack(cell) {
     const targetCell = this.getCell(cell)
-    if(targetCell.attacked) throw new Error("cell has already been attacked")
+    if(targetCell.attacked === true) throw new Error("cell has already been attacked")
     targetCell.attacked = true
     
     if(targetCell.shipId != null) {

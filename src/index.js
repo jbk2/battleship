@@ -13,11 +13,9 @@ function init() {
   // populate their boards
   humanPlayer.getBoard().populateBoard()
   computerPlayer.getBoard().populateBoard()
-
   // display boards
   UIController.displayBoard(humanPlayer.getBoard(), 'human')
   UIController.displayBoard(computerPlayer.getBoard(), 'computer')
-  // display their boards
   // commence game
     // - display turn
     // - enable turn
