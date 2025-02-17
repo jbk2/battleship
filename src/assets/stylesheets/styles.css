@@ -1,0 +1,25 @@
+#boards {
+  display: flex;
+  justify-content: center;
+  gap: 5rem;
+}
+
+table {
+  width: clamp(20rem, 30vw, 35rem);
+  aspect-ratio: 1/1;
+  display: flex;
+  flex-direction: column;
+  border: 0.2px, solid, black;
+}
+
+tr {
+  display: flex;
+}
+
+td {
+  width: 4rem;
+  aspect-ratio: 1/1;
+  border: 0.2px, solid, black;
+}
+
+
