@@ -176,6 +176,44 @@ describe("Board", () => {
       expect(submarine.isSunk()).toBe(true);
     })
   })
+
+  describe("sinkFleet()", () => {
+    it("sinks all ships on the board", () => {
+      const board = new Board();
+      board.populateBoard();
+      const ships = Object.values(board.getShips())
+      ships.forEach(ship => {
+        expect(ship.isSunk()).toBe(false);
+      })
+      board.sinkFleet()
+      ships.forEach(ship => {
+        expect(ship.isSunk()).toBe(true);
+      })
+    })
+  })
+
+  describe("fleetSunk()", () => {
+    const board = new Board();
+    board.populateBoard();
+    
+    it("returns false if no ships are sunk", () => {
+      expect(board.fleetSunk()).toBe(false);
+    })
+    
+    it("returns false if only some ships are sunk", () => {
+      const board = new Board();
+      board.populateBoard();
+      const shipsIds = Object.keys(board.getShips())
+      board.sinkShip(shipsIds[0])
+      board.sinkShip(shipsIds[1])
+      expect(board.fleetSunk()).toBe(false);
+    })
+    
+    it("returns true if all ships are sunk", () => {
+      board.sinkFleet();
+      expect(board.fleetSunk()).toBe(true);
+    })
+  })
   
   // check whether entire fleet is sunk.
   describe("fleetSunk()", () => {

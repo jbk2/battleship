@@ -130,7 +130,15 @@ export class Board {
   }
 
   fleetSunk() {
-    return false
+    return Object.values(this.getShips()).every(ship => ship.isSunk());
+  }
+
+
+  sinkFleet() {
+    const shipsIds = Object.keys(this.getShips())
+    shipsIds.forEach(shipId => {
+      this.sinkShip(shipId);
+    })
   }
 
   // helper method to test fleetSunk
@@ -140,6 +148,7 @@ export class Board {
       this.receiveAttack(cell)
     })
   }
+
 
   
 
