@@ -28,7 +28,6 @@ A JS implementation of the classic Battleship game built with TDD via Jest.
 
 ### Todos:
 
-- Write sinkShip(), call on all ships, to then be able to test & write the fleetSunk method
 - Add the logic of cell selection on a turn | hot or miss check |
 - Add the concept of players | their turns | their boards
 - Add game play flow logic | ship fleet random layout |win checking
