@@ -1,16 +1,28 @@
 import './assets/stylesheets/styles.css'
-import board from './views/partials/_board.html'
+// import { Board } from './components/board.js'
+import { Player } from './components/player.js'
+import { UIController } from './ui/ui-controller.js'
 
 document.addEventListener("DOMContentLoaded", () => {
-  const humansBoard = document.getElementById('humans-board')
-  humansBoard.insertAdjacentHTML('beforeend', board);
-  humansBoard.querySelector('.board-title').innerText = "Human player's board"
-  
-  const computersBoard = document.getElementById('computers-board')
-  computersBoard.insertAdjacentHTML('beforeend', board);
-  computersBoard.querySelector('.board-title').innerText = "Computer player's board"
-
-
 })
 
-console.log("Hello This is a Javascript project. I am working");
+function init() {
+  // create two players
+  const humanPlayer = new Player('human');
+  const computerPlayer = new Player('computer');
+  // populate their boards
+  humanPlayer.getBoard().populateBoard()
+  computerPlayer.getBoard().populateBoard()
+
+  // display boards
+  UIController.displayBoard(humanPlayer.getBoard(), 'human')
+  UIController.displayBoard(computerPlayer.getBoard(), 'computer')
+  // display their boards
+  // commence game
+    // - display turn
+    // - enable turn
+    // - calculate winner
+    // - change turn if no win
+}
+
+init();
