@@ -28,7 +28,7 @@ A JS implementation of the classic Battleship game built with TDD via Jest.
 
 ### Todos:
 
-- refactor displayBoard()
+- if hit > if ship sunk must callback to UI to mark ship as sunk (outline or color change)
 - introduce game and turns
 - introduce computer turn taking driver logic
   - do we simulate clicks also, therefore using same display logic as human player,

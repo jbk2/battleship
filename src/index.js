@@ -6,7 +6,7 @@ import { UIController } from './ui/ui-controller.js'
 document.addEventListener("DOMContentLoaded", () => {
 })
 
-function init() {
+function setUp() {
   // create two players
   const humanPlayer = new Player('human');
   const computerPlayer = new Player('computer');
@@ -18,6 +18,12 @@ function init() {
   // display boards
   UIController.displayBoard(humansBoard, 'human')
   UIController.displayBoard(computersBoard, 'computer')
+}
+
+function init() {
+  setUp()
+  
+  const game = new Game()
   // commence game
   // - add event listeners to computer board:
   // UIController.addComputerBoardListeners(computersBoard)
