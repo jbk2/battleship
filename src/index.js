@@ -7,22 +7,18 @@ import { Game } from './components/game.js'
 document.addEventListener("DOMContentLoaded", () => {
 })
 
-function setUp() {
-  // create two players
-  const humanPlayer = new Player('human');
-  const computerPlayer = new Player('computer');
-  // populate their boards
-  const humansBoard = humanPlayer.getBoard()
-  const computersBoard = computerPlayer.getBoard()
-  humansBoard.populateBoard()
-  computersBoard.populateBoard()
+function init() {
+  const game = new Game();
+  const humanPlayer = game.getHumanPlayer();
+  const computerPlayer = game.getComputerPlayer();
+  const humansBoard = humanPlayer.getBoard();
+  const computersBoard = computerPlayer.getBoard();
   // display boards
   UIController.displayBoard(humansBoard, 'human')
   UIController.displayBoard(computersBoard, 'computer')
 }
 
-function init() {
-  setUp()
+function setUp() {
   // const game = new Game()
   // commence game
   // - add event listeners to computer board:
