@@ -1,4 +1,5 @@
 import _board from '../views/partials/_board.html'
+import { game } from '../components/ship.js'
 
 export class UIController {
   static displayBoard(board, boardType) {
@@ -14,6 +15,7 @@ export class UIController {
       for(let col in grid[row]) {
         const gridCell = grid[row][col];
         const uiCell = boardElement.querySelector(`#row-${row} > .col-${col}`)
+        console.log('GRID CELL HERE',gridCell)
 
         if(!gridCell.attacked && gridCell.shipId && boardType === 'human') {
           uiCell.innerText = ship;
@@ -23,6 +25,12 @@ export class UIController {
         }
         if(gridCell.attacked && !gridCell.shipId) {
           uiCell.innerText = miss;
+        }
+        if(gridCell.attacked && gridCell.shipId) {
+          const ship = board.getShip(gridCell.shipId)
+          if(ship.isSunk()) {
+            uiCell.classList.add('sunk');
+          }
         }
       }
     }

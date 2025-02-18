@@ -1,4 +1,4 @@
-import { Board } from "./board";
+import { Board } from "./board.js";
 
 // instantiate:
   // - Board
@@ -21,6 +21,10 @@ export class Game {
 
   getActivePlayer() {
     return this.#activePlayer;
+  }
+
+  toggleActivePlayer() {
+    
   }
 }
 
