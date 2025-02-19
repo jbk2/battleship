@@ -23,7 +23,7 @@ describe("Board", () => {
 
     beforeEach(() => {
       board = new Board();
-      carrier = new Ship(5);
+      carrier = new Ship('carrier');
     })
     
     it("will store the ship and its ID in #ships", () => {
@@ -51,14 +51,14 @@ describe("Board", () => {
 
     it("will not place a ship if cells are occupied", () => {
       board.placeShip(carrier, "a1", "a5");
-      const destroyer = new Ship(2);
+      const destroyer = new Ship('destroyer');
       expect(() => board.placeShip(destroyer, "a1", "a2")).toThrowError(
         `Error placing ship ${destroyer.getId()} at a1 - a2: Can't place ship as not all of its cells are empty`
       );
     });
 
     it("will not place the ship unless it's vertical or horizontal", () => {
-      const battleship = new Ship(4);
+      const battleship = new Ship('battleship');
       expect(() => board.placeShip(battleship, "b1", "e4"))
         .toThrowError(`Error placing ship ${battleship.getId()} at b1 - e4: Can't place ship: b1 - e4 is diagonal positioning`
       );
@@ -68,14 +68,14 @@ describe("Board", () => {
     });
       
     it("cannot place ship if placement cells exceed ships size", () => {
-      const battleship = new Ship(4);
+      const battleship = new Ship('battleship');
       expect(() => board.placeShip(battleship, "b1", "f1"))
         .toThrowError(`Error placing ship ${battleship.getId()} at b1 - f1: Cell placement size does not equal ship size`
       )
     });
 
     it("cannot place ship if placement cells are less than ships size", () => {
-      const cruiser = new Ship(3);
+      const cruiser = new Ship('cruiser');
       expect(() => board.placeShip(cruiser, "j1", "j2"))
         .toThrowError(`Error placing ship ${cruiser.getId()} at j1 - j2: Cell placement size does not equal ship size`
       )
@@ -89,7 +89,7 @@ describe("Board", () => {
     describe("if a hit", () => {
       beforeEach(() => {
         board = new Board();
-        carrier = new Ship(5);
+        carrier = new Ship('carrier');
         board.placeShip(carrier, 'a1', 'a5')
       })
       
@@ -114,7 +114,7 @@ describe("Board", () => {
     describe("if a miss", () => {
       beforeEach(() => {
         board = new Board();
-        carrier = new Ship(5);
+        carrier = new Ship('carrier');
         board.placeShip(carrier, 'a1', 'a5')
       })
 
@@ -131,7 +131,7 @@ describe("Board", () => {
     describe("if a hit", () => {
       beforeEach(() => {
         board = new Board();
-        carrier = new Ship(5);
+        carrier = new Ship('carrier');
         board.placeShip(carrier, 'a1', 'a5')
       })
 
@@ -156,7 +156,7 @@ describe("Board", () => {
   describe("sinkShip()", () => {
     it("should hit all cells of a ship, carrier example", () => {
       const board = new Board();
-      const carrier = new Ship(5);
+      const carrier = new Ship('carrier');
       board.placeShip(carrier, 'a1', 'a5');
       expect(carrier.getHits()).toBe(0);
       expect(carrier.isSunk()).toBe(false);
@@ -167,7 +167,7 @@ describe("Board", () => {
     
     it("should hit all cells of a ship, submarine example", () => {
       const board = new Board();
-      const submarine = new Ship(3);
+      const submarine = new Ship('submarine');
       board.placeShip(submarine, 'j1', 'j3');
       expect(submarine.getHits()).toBe(0);
       expect(submarine.isSunk()).toBe(false);

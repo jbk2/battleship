@@ -52,8 +52,8 @@ export class Board {
   }
 
   populateBoard() {
-    const shipSizes = [5, 4, 3, 3, 2]
-    const ships = Array.from(shipSizes, size => new Ship(size))
+    const shipTypes = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer']
+    const ships = Array.from(shipTypes, type => new Ship(type))
     
     ships.forEach(ship => {
       let placed = false

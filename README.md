@@ -29,8 +29,6 @@ A JS implementation of the classic Battleship game built with TDD via Jest.
 ### Todos:
 
 - if hit > if ship sunk must callback to UI to mark ship as sunk (outline or color change)
-
-- Add the UI for the game
-- Add fleet UI element
+- write functions to update fleet display elements
 - Add randomise fleet position 
 - caputre match game scores

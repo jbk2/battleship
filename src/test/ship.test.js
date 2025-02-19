@@ -6,15 +6,19 @@ describe("Ship", () => {
   describe("instantiation", () => {
     beforeEach(() => {
       Ship.shipCounter = 0
-      carrier = new Ship(5);
+      carrier = new Ship('carrier');
     })
 
     it("should construct a new ship instance", () => {
       expect(carrier.getSize()).toBe(5);
     })
+
+    it('should set, and enable get of, a ships type', () => {
+      expect(carrier.getType()).toBe('carrier');
+    })
     
     it("should have a unique Id", () => {
-      const battleShip = new Ship(4);
+      const battleShip = new Ship('battleship');
       expect(carrier.getId()).toBe('ship-1');
       expect(battleShip.getId()).not.toBe('ship-1');
       expect(battleShip.getId()).toBe('ship-2');
@@ -46,7 +50,7 @@ describe("Ship", () => {
   })
   
   describe("isSunk()", () => {
-    const carrier = new Ship(5);
+    const carrier = new Ship('carrier');
 
     it("returns false if hits < size", () => {
       expect(carrier.isSunk()).toBeFalsy()

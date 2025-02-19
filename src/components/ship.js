@@ -1,11 +1,19 @@
 export class Ship {
   static shipCounter = 0
-  #size
-  #hits
   #id
+  #size
+  #type
+  #hits
+
+  static shipDefinitions =  { carrier: { size: 5 },
+    battleship: { size: 4 },
+    cruiser: { size: 3 },
+    submarine: { size: 3 },
+    destroyer: { size: 2 }
+  };
   
-  constructor(size) {
-    this.setSize(size)
+  constructor(type) {
+    this.setTypeAndSize(type)
     this.#hits = 0;
     this.#id = `ship-${++Ship.shipCounter}`
   }
@@ -13,13 +21,20 @@ export class Ship {
   getId() {
     return this.#id
   }
-
-  setSize(size) {
-    this.#size = size
+  
+  getType() {
+    return this.#type
   }
 
   getSize() {
     return this.#size
+  }
+  
+  setTypeAndSize(type) {
+    if(!(type in Ship.shipDefinitions)) { throw new Error('type does not exist')};
+    const size = Ship.shipDefinitions[type].size
+    this.#type = type
+    this.#size = size
   }
 
   hit() {

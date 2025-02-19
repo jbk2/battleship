@@ -121,7 +121,7 @@ describe("placementCells", () => {
 
   describe("occupied()", () => {
     const board = new Board()
-    const carrier = new Ship(5)
+    const carrier = new Ship('carrier')
     board.placeShip(carrier, 'a1', 'a5')
     const occupiedCells = ['a1', 'a2', 'a3']
     const unOccupiedCells = ['b1', 'b2', 'b3']
@@ -146,16 +146,16 @@ describe("placementCells", () => {
 
   describe("getEmptyCells()", () => {
     const board = new Board()
-    const carrier = new Ship(5)
-    const battleship = new Ship(4)
-    const cruiser = new Ship(3)
+    const carrier = new Ship('carrier')
+    const battleship = new Ship('battleship')
+    const cruiser = new Ship('cruiser')
     board.placeShip(carrier, 'a1', 'a5')
     board.placeShip(battleship, 'c7', 'c10')
     board.placeShip(cruiser, 'j1', 'h1')
     
     it("returns an array of all empty cells", () => {
       expect(GridHelper.getEmptyCells(board.getGrid()).length).toBe(88);
-      const submarine = new Ship(3)
+      const submarine = new Ship('submarine')
       board.placeShip(submarine, 'e1', 'e3')
       expect(GridHelper.getEmptyCells(board.getGrid()).length).toBe(85);
     })
@@ -170,13 +170,13 @@ describe("placementCells", () => {
 
   describe("getShipsCells", () => {
     const board = new Board()
-    const carrier = new Ship(5)
+    const carrier = new Ship('carrier')
     board.placeShip(carrier, 'a1', 'a5')
     const carrierId = carrier.getId()
-    const battleship = new Ship(4)
+    const battleship = new Ship('battleship')
     board.placeShip(battleship, 'c7', 'c10')
     const battleshipId = battleship.getId()
-    const cruiser = new Ship(3)
+    const cruiser = new Ship('cruiser')
     board.placeShip(cruiser, 'j1', 'h1')
     const cruiserId = cruiser.getId()
 
@@ -185,8 +185,5 @@ describe("placementCells", () => {
       expect(GridHelper.getShipsCells(board.getGrid(), battleshipId)).toEqual(['c7', 'c8', 'c9', 'c10'])
       expect(GridHelper.getShipsCells(board.getGrid(), cruiserId)).toEqual(['h1', 'i1', 'j1'])
     })
-
-
   })
-
 })
