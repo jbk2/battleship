@@ -51,10 +51,13 @@ export class Game {
       throw new Error("activePlayer is 'computer', \
           activePlayer must be 'human' for a 'human' to attack")
     }
+    const computerPlayersBoard = this.getComputerPlayer().getBoard();
 
     try {
-      this.getComputerPlayer().getBoard().receiveAttack(cell)
+      computerPlayersBoard.receiveAttack(cell)
+      if(this.checkWin(computerPlayersBoard)) { return "Human wins" }
       this.toggleActivePlayer();
+      return null;
     } catch (error) {
       console.log(`was an error trying to call #receiveAttack(${cell})`, error)
     }
@@ -72,14 +75,22 @@ export class Game {
     while(!validMove) {
       cell = GridHelper.getRandomCell();
       try {
-        this.getHumanPlayer().getBoard().receiveAttack(cell);
+        const humanPlayersBoard = this.getHumanPlayer().getBoard()
+        humanPlayersBoard.receiveAttack(cell);
+        if(this.checkWin(humanPlayersBoard)) { return "Computer wins" }
         this.toggleActivePlayer();
         validMove = true;
+        return null
       } catch (error) {
         console.log(`error caught when processing computer move while \
           sending ${cell} attack to humans board`)
       }  
     }
+  }
+
+  // if true this needs to update UI, stop game, offer re-game
+  checkWin(board) {
+    return board.fleetSunk()
   }
 
   playGame() {
