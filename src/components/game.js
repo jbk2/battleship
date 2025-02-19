@@ -1,3 +1,4 @@
+import { UIController } from "../ui/ui-controller.js";
 import { Board } from "./board.js";
 import { GridHelper } from "./helpers/gridHelper.js";
 import { Player } from "./player.js";
@@ -54,12 +55,16 @@ export class Game {
     const computerPlayersBoard = this.getComputerPlayer().getBoard();
 
     try {
+      console.log("processing human move")
       computerPlayersBoard.receiveAttack(cell)
       if(this.checkWin(computerPlayersBoard)) { return "Human wins" }
       this.toggleActivePlayer();
+      UIController.displayTurn(this.getActivePlayer())
+      setTimeout(() => this.processComputerMove(), 1000);
       return null;
     } catch (error) {
       console.log(`was an error trying to call #receiveAttack(${cell})`, error)
+      throw error;
     }
   }
 
@@ -74,11 +79,16 @@ export class Game {
     
     while(!validMove) {
       cell = GridHelper.getRandomCell();
+      console.log(cell)
       try {
+        console.log("processing computer move");
         const humanPlayersBoard = this.getHumanPlayer().getBoard()
         humanPlayersBoard.receiveAttack(cell);
+        // update cell on humans board
+        UIController.displayBoard(this, humanPlayersBoard, 'human')
         if(this.checkWin(humanPlayersBoard)) { return "Computer wins" }
         this.toggleActivePlayer();
+        UIController.displayTurn(this.getActivePlayer())
         validMove = true;
         return null
       } catch (error) {
@@ -93,8 +103,9 @@ export class Game {
     return board.fleetSunk()
   }
 
-  playGame() {
-    // ui signify humans turn
+  startGame() {
+    // ui signify humans turn:
+    UIController.displayTurn(this.getActivePlayer())
       // place attack
       // evaluate win
         // if win notify ui, stop game (remove computer baord event listeners)

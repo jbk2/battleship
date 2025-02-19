@@ -13,16 +13,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function init() {
   const game = new Game();
-  const humanPlayer = game.getHumanPlayer();
-  const computerPlayer = game.getComputerPlayer();
-  const humansBoard = humanPlayer.getBoard();
-  const computersBoard = computerPlayer.getBoard();
-  // display boards
-  UIController.displayBoard(humansBoard, 'human')
-  UIController.displayBoard(computersBoard, 'computer')
+  const humansBoard = game.getHumanPlayer().getBoard();
+  const computersBoard = game.getComputerPlayer().getBoard();
+  UIController.displayBoard(game, humansBoard, 'human')
+  UIController.displayBoard(game, computersBoard, 'computer')
+  // UIController.displayTurn(this.getActivePlayer())
+  game.startGame()
 }
 
-function setUp() {
+// function setUp() {
   // const game = new Game()
   // commence game
   // - add event listeners to computer board:
@@ -31,6 +30,6 @@ function setUp() {
     // - enable turn
     // - calculate winner
     // - change turn if no win
-}
+// }
 
 init();

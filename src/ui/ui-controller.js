@@ -1,8 +1,8 @@
 import _board from '../views/partials/_board.html'
-import { game } from '../components/ship.js'
+import { Game } from '../components/game.js'
 
 export class UIController {
-  static displayBoard(board, boardType) {
+  static displayBoard(game, board, boardType) {
     const [hit, miss, ship] = ['💥', '🌊', '🛳️'];
     const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
     const titleString = `${capitalize(boardType)} player's board`
@@ -23,7 +23,6 @@ export class UIController {
       for(let col in grid[row]) {
         const gridCell = grid[row][col];
         const uiCell = boardElement.querySelector(`#row-${row} > .col-${col}`)
-        console.log('GRID CELL HERE',gridCell)
 
         if(!gridCell.attacked && gridCell.shipId && boardType === 'human') {
           uiCell.innerText = ship;
@@ -43,11 +42,11 @@ export class UIController {
       }
     }
     if(boardType === 'computer') {
-      UIController.addComputerBoardListeners(board);
+      UIController.addComputerBoardListeners(game, board);
     };
   }
 
-  static addComputerBoardListeners(board) {
+  static addComputerBoardListeners(game, board) {
     const grid = board.getGrid();
 
     for(let row in grid) {
@@ -63,18 +62,30 @@ export class UIController {
         cellEl.addEventListener('click', () => {
           try {
             console.log("attacking", `${row}${col}`)
-            board.receiveAttack(`${row}${col}`);
-            UIController.displayBoard(board, 'computer')
-            console.log(board.getGrid())
+            game.processHumanMove(`${row}${col}`)
+            // board.receiveAttack(`${row}${col}`);
+            UIController.displayBoard(game, board, 'computer')
+            // console.log(board.getGrid())
           } catch (error) {
             alert(error);
           }
         })
       }
     }
-  } 
+  }
 
-  static displayInstructions() {
+  static updateCell() {
+    
+  }
+
+  static displayTurn(player) {
+    const dialogueEl = document.querySelector('section#dialogue > div > p');
+    dialogueEl.innerText = `${player}'s turn...`;
+    console.log("DIALOG EL HERE ==>>", dialogueEl)
+    console.log("PLAYER HERE ==>>", player)
+  }
+
+  static displayWin(winner) {
 
   }
 }

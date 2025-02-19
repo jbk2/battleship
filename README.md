@@ -28,6 +28,10 @@ A JS implementation of the classic Battleship game built with TDD via Jest.
 
 ### Todos:
 
+- disable computer board listeners unless it's humans turn
+- build in 2nd turn on hit
+- intro win condition stopping play and displaying winner
+- intro computer move logic to hit near to existing hits
 - if hit > if ship sunk must callback to UI to mark ship as sunk (outline or color change)
 - write functions to update fleet display elements
 - Add randomise fleet position 

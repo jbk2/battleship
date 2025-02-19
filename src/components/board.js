@@ -123,6 +123,7 @@ export class Board {
     
     if(targetCell.shipId != null) {
       this.getShip(targetCell.shipId).hit()
+      // and update the respective fleet element
       return { hit: true }
     } else {
       return { hit: false }
