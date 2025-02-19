@@ -1,10 +1,14 @@
 import './assets/stylesheets/styles.css'
-// import { Board } from './components/board.js'
 import { Player } from './components/player.js'
 import { UIController } from './ui/ui-controller.js'
 import { Game } from './components/game.js'
+import _fleet_grid  from './views/partials/_fleet_grid.html'
 
 document.addEventListener("DOMContentLoaded", () => {
+  const humanFleet = document.getElementById('human-fleet');
+  const computerFleet = document.getElementById('computer-fleet');
+  humanFleet.insertAdjacentHTML('beforeend', _fleet_grid)
+  computerFleet.insertAdjacentHTML('beforeend', _fleet_grid)
 })
 
 function init() {

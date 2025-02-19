@@ -4,11 +4,19 @@ import { game } from '../components/ship.js'
 export class UIController {
   static displayBoard(board, boardType) {
     const [hit, miss, ship] = ['💥', '🌊', '🛳️'];
+    const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
+    const titleString = `${capitalize(boardType)} player's board`
     const boardElement = document.getElementById(`${boardType}s-board`);
     
     boardElement.innerHTML = '';
     boardElement.insertAdjacentHTML('beforeend', _board);
-    boardElement.querySelector('.board-title').innerText = `${boardType} player's board`
+    boardElement.querySelector('.board-title').innerText = titleString;
+    if(boardType === 'human') {
+      boardElement.querySelector('.board-title').style.textAlign = 'left';
+      boardElement.querySelector('.board-title').style.marginLeft = '2.6rem';
+    } else {
+      boardElement.querySelector('.board-title').style.textAlign = 'right';
+    }
     const grid = board.getGrid();
 
     for(let row in grid) {
@@ -65,4 +73,8 @@ export class UIController {
       }
     }
   } 
+
+  static displayInstructions() {
+
+  }
 }

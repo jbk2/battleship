@@ -5,15 +5,144 @@
   }
 }
 
-header {
-  display: flex;
-  justify-content: center;
+
+
+body {
+  margin: 0;
 }
 
+/* #################### Header ######################### */
+
+header {
+  display: flex;
+  align-items: center;
+  height: 3.4rem;  
+  --s: 5px; /* control the size*/
+  --c1: #e5fcc2;
+  --c2: #0cbbde;
+  --_s:37.5% 12.5% at 62.5%;
+  --_g:34% 99%,#0000 101%;
+  --g1:radial-gradient(var(--_s) 100%,#0000 32%,var(--c1) var(--_g));
+  --g2:radial-gradient(var(--_s) 0   ,#0000 32%,var(--c1) var(--_g));
+  --g3:radial-gradient(var(--_s) 100%,#0000 32%,var(--c2) var(--_g));
+  --g4:radial-gradient(var(--_s) 0   ,#0000 32%,var(--c2) var(--_g));
+  background:
+  var(--g1),
+  var(--g2) 0                calc(3*var(--s)),
+  var(--g3) var(--s)         calc(3*var(--s)),
+  var(--g4) var(--s)         calc(6*var(--s)),
+  var(--g1) calc(2*var(--s)) calc(6*var(--s)),
+  var(--g2) calc(2*var(--s)) calc(9*var(--s)),
+  var(--g3) calc(3*var(--s)) calc(9*var(--s)),
+  var(--g4) calc(3*var(--s)) 0,
+  repeating-linear-gradient(var(--c1) 0 25%,var(--c2) 0 50%);
+  background-size: calc(4*var(--s)) calc(12*var(--s));
+  
+}
+
+h1#logo-type {
+  margin: 0.2;
+  margin-left: 1rem;
+  justify-self: start;
+  color: rgb(4, 4, 56);
+  background-color: rgba(255, 255, 255, 0.579);
+}
+
+/* #################### Fleet section ######################### */
+#human-fleet > h5, #computer-fleet > h5 {
+  margin: 0;
+  margin-bottom: 0.2rem;
+}
+
+/* 5x5 Grid Layout */
+.fleet-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 5px); /* 5 columns */
+  grid-template-rows: repeat(5, 5px); /* 5 rows */
+  gap: 2px 1px; /* Horizontal gap: 2px, Vertical gap: 1px */
+  /* background-color: #ddd; */
+  /* padding: 0.2rem; */
+  width: max-content;
+}
+
+/* Ship Cells */
+.grid-item {
+  width: 5px;
+  height: 5px;
+  background-color: rgb(117, 117, 206);
+  border-radius: 1px; /* Slight rounded corners */
+}
+
+/* Positioning Ships Using Grid */
+.carrier:nth-child(1) { grid-column: 1; grid-row: 1; }
+.carrier:nth-child(2) { grid-column: 2; grid-row: 1; }
+.carrier:nth-child(3) { grid-column: 3; grid-row: 1; }
+.carrier:nth-child(4) { grid-column: 4; grid-row: 1; }
+.carrier:nth-child(5) { grid-column: 5; grid-row: 1; }
+
+.battleship:nth-child(6) { grid-column: 1; grid-row: 2; }
+.battleship:nth-child(7) { grid-column: 2; grid-row: 2; }
+.battleship:nth-child(8) { grid-column: 3; grid-row: 2; }
+.battleship:nth-child(9) { grid-column: 4; grid-row: 2; }
+
+.cruiser:nth-child(10) { grid-column: 1; grid-row: 3; }
+.cruiser:nth-child(11) { grid-column: 2; grid-row: 3; }
+.cruiser:nth-child(12) { grid-column: 3; grid-row: 3; }
+
+.submarine:nth-child(13) { grid-column: 1; grid-row: 4; }
+.submarine:nth-child(14) { grid-column: 2; grid-row: 4; }
+.submarine:nth-child(15) { grid-column: 3; grid-row: 4; }
+
+.destroyer:nth-child(16) { grid-column: 1; grid-row: 5; }
+.destroyer:nth-child(17) { grid-column: 2; grid-row: 5; }
+
+/* #################### Info section ######################### */
+div#info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.7rem;
+}
+
+section#dialogue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section#dialogue div {
+  display: flex;
+  align-items: center;
+  transform: translateX(4rem);
+}
+
+section#dialogue div p {
+  display: flex;
+  align-items: center;
+  height: 2rem; 
+  width: 15rem;
+  border-radius: 4px;
+  background-color: rgb(224, 223, 223);
+  padding-left: 0.8rem;
+}
+
+section#dialogue button {
+  width: 7rem;
+  height: 1.7rem;
+  margin-left: 1rem;
+}
+
+section#computer-fleet {
+  margin-left: 4rem;
+  transform: translateX(4rem);
+}
+
+
+/* #################### Boards section ######################### */
 #boards {
   display: flex;
   justify-content: center;
   gap: clamp(1rem, 10vw, 6rem);
+  margin-top: 2%;
 }
 
 .board {
@@ -25,6 +154,7 @@ header {
 
 .board-title {
   text-align: center;
+  margin-top: 0;
 }
 
 .board tbody {
