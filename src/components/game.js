@@ -46,58 +46,30 @@ export class Game {
     return this.#computerPlayer
   }
 
-  // have the computer cell even listeners trigger this move
-  processHumanMove(cell) {
-    if(this.getActivePlayer() === 'computer') {
-      throw new Error("activePlayer is 'computer', \
-          activePlayer must be 'human' for a 'human' to attack")
+  processMove(playerType, cell = null) {
+    if(this.getActivePlayer() != playerType) {
+      throw new Error(`activePlayer is '${this.getActivePlayer()}', activePlayer must be '${playerType}' for a '${playerType}' to attack`)
     }
-    const computerPlayersBoard = this.getComputerPlayer().getBoard();
+    const playersBoard = playerType === 'human' ? this.getComputerPlayer().getBoard() : this.getHumanPlayer().getBoard();
 
     try {
-      console.log("processing human move")
-      computerPlayersBoard.receiveAttack(cell)
-      UIController.displayBoard(this, computerPlayersBoard, 'computer')
-      if(this.checkWin(computerPlayersBoard)) { return "Human wins" }
+      console.log(`processing ${playerType} move`)
+      if(playerType === 'computer' && cell === null) {
+        cell = GridHelper.getRandomCell();
+      }
+      playersBoard.receiveAttack(cell)
+      UIController.displayBoard(this, playersBoard, playerType)
+      if(this.checkWin(playersBoard)) { return `${playerType} wins` }
       this.toggleActivePlayer();
-      // remove computer cell event listeners
+      // if playerType === humanMove then remove computer cell event listeners
       UIController.displayTurn(this.getActivePlayer())
-      setTimeout(() => this.processComputerMove(), 500);
+      if(this.getActivePlayer() === 'computer') {
+        setTimeout(() => this.processMove('computer', null), 500);
+      }
       return null;
-    } catch (error) {
+    } catch(error) {
       console.log(`was an error trying to call #receiveAttack(${cell})`, error)
       throw error;
-    }
-  }
-
-  processComputerMove() {
-    if(this.getActivePlayer() === 'human') {
-      throw new Error("activePlayer is 'human', \
-        activePlayer must be 'computer' for a 'computer' to attack");
-    }
-    
-    const humanPlayersBoard = this.getHumanPlayer().getBoard()
-    let validMove = false;
-    let cell;
-    
-    while(!validMove) {
-      cell = GridHelper.getRandomCell();
-      console.log(cell)
-      try {
-        console.log("processing computer move");
-        humanPlayersBoard.receiveAttack(cell);
-        // update cell on humans board
-        UIController.displayBoard(this, humanPlayersBoard, 'human')
-        if(this.checkWin(humanPlayersBoard)) { return "Computer wins" }
-        this.toggleActivePlayer();
-        // add computer cell event listeners
-        UIController.displayTurn(this.getActivePlayer())
-        validMove = true;
-        return null
-      } catch (error) {
-        console.log(`error caught when processing computer move while \
-          sending ${cell} attack to humans board`)
-      }  
     }
   }
 
