@@ -63,11 +63,9 @@ export class UIController {
           try {
             console.log("attacking", `${row}${col}`)
             game.processHumanMove(`${row}${col}`)
-            // board.receiveAttack(`${row}${col}`);
-            UIController.displayBoard(game, board, 'computer')
-            // console.log(board.getGrid())
+            // UIController.displayBoard(game, board, 'computer')
           } catch (error) {
-            alert(error);
+            console.log(error);
           }
         })
       }
@@ -75,7 +73,7 @@ export class UIController {
   }
 
   static updateCell() {
-    
+
   }
 
   static displayTurn(player) {

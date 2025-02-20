@@ -57,10 +57,12 @@ export class Game {
     try {
       console.log("processing human move")
       computerPlayersBoard.receiveAttack(cell)
+      UIController.displayBoard(this, computerPlayersBoard, 'computer')
       if(this.checkWin(computerPlayersBoard)) { return "Human wins" }
       this.toggleActivePlayer();
+      // remove computer cell event listeners
       UIController.displayTurn(this.getActivePlayer())
-      setTimeout(() => this.processComputerMove(), 1000);
+      setTimeout(() => this.processComputerMove(), 500);
       return null;
     } catch (error) {
       console.log(`was an error trying to call #receiveAttack(${cell})`, error)
@@ -74,6 +76,7 @@ export class Game {
         activePlayer must be 'computer' for a 'computer' to attack");
     }
     
+    const humanPlayersBoard = this.getHumanPlayer().getBoard()
     let validMove = false;
     let cell;
     
@@ -82,12 +85,12 @@ export class Game {
       console.log(cell)
       try {
         console.log("processing computer move");
-        const humanPlayersBoard = this.getHumanPlayer().getBoard()
         humanPlayersBoard.receiveAttack(cell);
         // update cell on humans board
         UIController.displayBoard(this, humanPlayersBoard, 'human')
         if(this.checkWin(humanPlayersBoard)) { return "Computer wins" }
         this.toggleActivePlayer();
+        // add computer cell event listeners
         UIController.displayTurn(this.getActivePlayer())
         validMove = true;
         return null

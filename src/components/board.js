@@ -149,9 +149,4 @@ export class Board {
       this.receiveAttack(cell)
     })
   }
-
-
-  
-
-
 }
