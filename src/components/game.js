@@ -69,7 +69,6 @@ export class Game {
 
       if (this.checkWin(opponentsBoard)) {
         if(!isHumanMove) { UIController.removeComputerBoardListeners(computersBoard) };
-        console.log(document.body.innerHTML);
         UIController.displayWin(playerType);
         return `${playerType} wins`;
       }

@@ -12,7 +12,7 @@ export class UIController {
     
     boardElement.innerHTML = '';
     boardElement.insertAdjacentHTML('beforeend', _board);
-    UIController.displayFleet(playerType);
+    UIController.displayFleet(board, playerType);
     boardElement.querySelector('.board-title').innerText = titleString;
     const grid = board.getGrid();
 
@@ -98,9 +98,19 @@ export class UIController {
     dialogueEl.innerText = `${winner}'s won!!! Congratulations`;
   }
 
-  static displayFleet(playerType) {
+  static displayFleet(board, playerType) {
     const playerBoardHeader = document.querySelector(`#${playerType}-board .board-header`)
-    console.log(playerBoardHeader);
     playerBoardHeader.insertAdjacentHTML('beforeend', _fleet_grid)
+    const ships = Object.values(board.getShips());
+   
+    ships.forEach(ship => {
+      const type = ship.getType();
+      const fleetShipEls = document.querySelectorAll(`#${playerType}-board .${type}`)
+      const hits = ship.getHits()
+   
+      for(let i = 0; i < hits; i++) {
+        fleetShipEls[i].classList.add('hit');
+      }
+    })
   }
 }
