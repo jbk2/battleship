@@ -1,4 +1,5 @@
 import { Board } from "../components/board.js";
+import { GridHelper } from "../components/helpers/gridHelper.js";
 import { Ship } from "../components/ship.js";
 
 describe("Board", () => {
@@ -237,6 +238,23 @@ describe("Board", () => {
       expect(newBoard.fleetSunk()).toBe(true)
       const unsunkShip = newBoard.unSinkFirstShip()
       expect(newBoard.fleetSunk()).toBe(false)
+    })
+  })
+
+  describe('getComputerMove()', () => {
+    it('will not return an already attacked cell', () => {
+      const newBoard = new Board();
+      newBoard.populateBoard();
+      newBoard.getCell('a1').attacked = true;
+      newBoard.getCell('a2').attacked = true;
+
+      GridHelper.getRandomCell = jest.fn()
+        .mockReturnValue('a1')
+        .mockReturnValue('a2')
+        .mockReturnValue('a3');
+      
+      const move = newBoard.getComputerMove();
+      expect(move).toBe('a3')
     })
   })
 

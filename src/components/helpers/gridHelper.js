@@ -110,8 +110,8 @@ export class GridHelper {
     return shipsCells
   }
 
-  static attackedAlready(grid, cell) {
-    
+  static attackedAlready(board, cell) {
+    return board.getCell(cell).attacked;
   }
 
 }

@@ -186,4 +186,19 @@ describe("placementCells", () => {
       expect(GridHelper.getShipsCells(board.getGrid(), cruiserId)).toEqual(['h1', 'i1', 'j1'])
     })
   })
+
+  describe('attackedAlready()', () => {
+    const newBoard = new Board;
+    const carrier = new Ship('carrier');
+    newBoard.placeShip(carrier, 'a1', 'a5');
+    newBoard.receiveAttack('a1');
+    
+    it('returns false for an unattacked cell', () => {
+      expect(GridHelper.attackedAlready(newBoard, 'a2')).toBe(false);
+    });
+    
+    it('returns true for an attacked cell', () => {
+      expect(GridHelper.attackedAlready(newBoard, 'a1')).toBe(true);
+    });
+  })
 })

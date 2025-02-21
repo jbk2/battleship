@@ -120,7 +120,7 @@ export class Board {
     let randCell;
     do {
       randCell = GridHelper.getRandomCell();
-    } while (this.getCell(randCell).attacked)
+    } while (GridHelper.attackedAlready(this, randCell))
     return randCell
   }
 
