@@ -44,6 +44,11 @@ export class Ship {
     this.#hits += 1;
   }
 
+  removeHit() {
+    if(this.#hits < 1) { throw new Error(`hitcount already < 1, hit count: ${this.getHits()}`)}
+    this.#hits -= 1
+  }
+
   getHits() {
     return this.#hits
   }

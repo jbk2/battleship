@@ -2,21 +2,21 @@ import _board from '../views/partials/_board.html'
 import { Game } from '../components/game.js'
 
 export class UIController {
-  static displayBoard(game, board, boardType) {
+  static displayBoard(game, board, playerType) {
     const [hit, miss, ship] = ['💥', '🌊', '🛳️'];
     const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
-    const titleString = `${capitalize(boardType)} player's board`
-    const boardElement = document.getElementById(`${boardType}s-board`);
+    const titleString = `${capitalize(playerType)} player's board`
+    const boardElement = document.getElementById(`${playerType}s-board`);
     
     boardElement.innerHTML = '';
     boardElement.insertAdjacentHTML('beforeend', _board);
     boardElement.querySelector('.board-title').innerText = titleString;
-    if(boardType === 'human') {
-      boardElement.querySelector('.board-title').style.textAlign = 'left';
-      boardElement.querySelector('.board-title').style.marginLeft = '2.6rem';
-    } else {
-      boardElement.querySelector('.board-title').style.textAlign = 'right';
-    }
+    // if(playerType === 'human') {
+    //   boardElement.querySelector('.board-title').style.textAlign = 'left';
+    //   boardElement.querySelector('.board-title').style.marginLeft = '2.6rem';
+    // } else {
+    //   boardElement.querySelector('.board-title').style.textAlign = 'right';
+    // }
     const grid = board.getGrid();
 
     for(let row in grid) {
@@ -24,16 +24,19 @@ export class UIController {
         const gridCell = grid[row][col];
         const uiCell = boardElement.querySelector(`#row-${row} > .col-${col}`)
 
-        if(!gridCell.attacked && gridCell.shipId && boardType === 'human') {
+        if(!gridCell.attacked && gridCell.shipId && playerType === 'human') {
           uiCell.innerText = ship;
         }
         if(gridCell.attacked && gridCell.shipId) {
           uiCell.innerText = hit;
+          uiCell.dataset.attacked = true;
         }
         if(gridCell.attacked && !gridCell.shipId) {
           uiCell.innerText = miss;
+          uiCell.dataset.attacked = true;
         }
         if(gridCell.attacked && gridCell.shipId) {
+          uiCell.dataset.attacked = true;
           const ship = board.getShip(gridCell.shipId)
           if(ship.isSunk()) {
             uiCell.classList.add('sunk');
@@ -41,38 +44,42 @@ export class UIController {
         }
       }
     }
-    if(boardType === 'computer') {
-      UIController.addComputerBoardListeners(game, board);
-    };
+    // if(boardType === 'computer') {
+    //   UIController.addComputerBoardListeners(game, board);
+    // };
   }
 
-  static addComputerBoardListeners(game, board) {
-    const grid = board.getGrid();
+  static addComputerBoardListeners(game, computerBoard) {
+    const grid = computerBoard.getGrid();
 
     for(let row in grid) {
       for(let col in grid[row]) {
         const cellEl = document.querySelector(`#computers-board #row-${row} > .col-${col}`)
         
+        if(cellEl.dataset.attacked) continue;
+        if (cellEl.dataset.listenerAdded === "true") continue;
+      
         cellEl.addEventListener('mouseover', () => {
           cellEl.style.backgroundColor = 'lightpink';
         })
         cellEl.addEventListener('mouseout', () => {
           cellEl.style.backgroundColor = '';
         })
-        cellEl.addEventListener('click', () => {
+        cellEl.addEventListener('click', (event) => {
           try {
             console.log("attacking", `${row}${col}`)
-            game.processHumanMove(`${row}${col}`)
-            // UIController.displayBoard(game, board, 'computer')
+            game.processMove('human', `${row}${col}`)
+            cellEl.dataset.attacked = true;
           } catch (error) {
             console.log(error);
           }
-        })
+        }, { once: true });
+        cellEl.dataset.listenerAdded = true;
       }
     }
   }
 
-  static updateCell() {
+  static removeComputerBoardListeners(computerBoard) {
 
   }
 

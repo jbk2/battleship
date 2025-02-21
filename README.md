@@ -27,7 +27,8 @@ A JS implementation of the classic Battleship game built with TDD via Jest.
 5. Open your browser and navigate to `http://localhost:8080/` to play the game.
 
 ### Todos:
-- disable computer board listeners unless it's humans turn
+- explicitly set & remove baord listeners
+  - disable computer board listeners unless it's humans turn
 - build in 2nd turn on hit
 - intro win condition stopping play and displaying winner
 - intro computer move logic to hit near to existing hits

@@ -71,7 +71,10 @@ describe('Game', () => {
         const newGame = new Game();
         const computerPlayersBoard = newGame.getComputerPlayer().getBoard();
         computerPlayersBoard.sinkFleet();
-        expect(newGame.processMove('human', 'a1')).toEqual('human wins');
+        expect(computerPlayersBoard.fleetSunk()).toBe(true)
+        const unSunkCell = computerPlayersBoard.unSinkFirstShip()
+        expect(computerPlayersBoard.fleetSunk()).toBe(false)
+        expect(newGame.processMove('human', unSunkCell)).toEqual('human wins');
       })
 
       it('should re-render the computers board', () => {
@@ -113,6 +116,20 @@ describe('Game', () => {
       expect(newGame.getActivePlayer()).toBe('computer');
       newGame.processMove('computer');
       expect(newGame.getActivePlayer()).toBe('human');
+    })
+
+    it("declares computer the game winner if all humans's ships are sunk", () => {
+      const newGame = new Game();
+      const humanPlayer = newGame.getHumanPlayer();
+      const humanPlayersBoard = humanPlayer.getBoard();
+      humanPlayersBoard.sinkFleet();
+      expect(humanPlayersBoard.fleetSunk()).toBe(true)
+      
+      const unSunkCell = humanPlayersBoard.unSinkFirstShip();
+      expect(humanPlayersBoard.fleetSunk()).toBe(false)
+
+      newGame.setActivePlayer('computer')
+      expect(newGame.processMove('computer', unSunkCell)).toEqual('computer wins');
     })
   })
 

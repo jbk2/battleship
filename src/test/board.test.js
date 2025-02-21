@@ -228,4 +228,16 @@ describe("Board", () => {
     })
   })
 
+  describe("unSinkShip()", () => {
+    it("unsinks a ship but removing a hit from a ship", () => {
+      const newBoard = new Board();
+      newBoard.populateBoard();
+      expect(newBoard.fleetSunk()).toBe(false)
+      newBoard.sinkFleet()
+      expect(newBoard.fleetSunk()).toBe(true)
+      const unsunkShip = newBoard.unSinkFirstShip()
+      expect(newBoard.fleetSunk()).toBe(false)
+    })
+  })
+
 });

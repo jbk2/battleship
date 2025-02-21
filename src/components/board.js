@@ -130,6 +130,14 @@ export class Board {
     }
   }
 
+  removeAttack(cell) {
+    const targetCell = this.getCell(cell)
+    if(!targetCell || targetCell.attacked !== true) {
+      throw new Error(`Either targetCell doesn't exist or it does and has not been attacked. Cell; ${cell}`)
+    }
+    targetCell.attacked = false;
+  }
+
   fleetSunk() {
     return Object.values(this.getShips()).every(ship => ship.isSunk());
   }
@@ -142,11 +150,21 @@ export class Board {
     })
   }
 
-  // helper method to test fleetSunk
+  unSinkFirstShip() {
+    const firstShip = Object.values(this.getShips())[0];
+    const firstShipId = Object.keys(this.getShips())[0];
+    const firstShipsFirstCell = GridHelper.getShipsCells(this.getGrid(), firstShipId)[0];
+    
+    firstShip.removeHit();
+    this.removeAttack(firstShipsFirstCell);
+    return firstShipsFirstCell;
+  }
+
   sinkShip(shipId) {
-    const shipsCells = GridHelper.getShipsCells(this.getGrid(), shipId)
+    const shipsCells = GridHelper.getShipsCells(this.getGrid(), shipId);
+    
     shipsCells.forEach(cell => {
-      this.receiveAttack(cell)
+      this.receiveAttack(cell);
     })
   }
 }
