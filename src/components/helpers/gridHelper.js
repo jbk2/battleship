@@ -110,4 +110,8 @@ export class GridHelper {
     return shipsCells
   }
 
+  static attackedAlready(grid, cell) {
+    
+  }
+
 }

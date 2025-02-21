@@ -116,6 +116,14 @@ export class Board {
     // (and whether the cell has been tried by competitor yet?)
   }
 
+  getComputerMove() {
+    let randCell;
+    do {
+      randCell = GridHelper.getRandomCell();
+    } while (this.getCell(randCell).attacked)
+    return randCell
+  }
+
   receiveAttack(cell) {
     const targetCell = this.getCell(cell)
     if(targetCell.attacked === true) throw new Error("cell has already been attacked")

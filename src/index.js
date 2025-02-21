@@ -9,8 +9,8 @@ function init() {
   const computersBoard = game.getComputerPlayer().getBoard();
   UIController.displayBoard(game, humansBoard, 'human');
   UIController.displayBoard(game, computersBoard, 'computer');
-  UIController.displayFleet('human');
-  UIController.displayFleet('computer');
+  // UIController.displayFleet('human');
+  // UIController.displayFleet('computer');
   // UIController.displayTurn(this.getActivePlayer())
   game.startGame()
 }

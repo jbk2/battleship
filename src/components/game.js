@@ -1,5 +1,4 @@
 import { UIController } from "../ui/ui-controller.js";
-import { Board } from "./board.js";
 import { GridHelper } from "./helpers/gridHelper.js";
 import { Player } from "./player.js";
 
@@ -54,15 +53,22 @@ export class Game {
     }
 
     const isHumanMove = playerType === "human";
-    const playersBoard = isHumanMove ? this.getHumanPlayer().getBoard() : this.getComputerPlayer().getBoard();
     const computersBoard = this.getComputerPlayer().getBoard();
-    const opponentsBoard = isHumanMove ? computersBoard : this.getHumanPlayer().getBoard();
+    const humansBoard = this.getHumanPlayer().getBoard();
+    const opponentsBoard = isHumanMove ? computersBoard : humansBoard;
     const boardOwnerTypeToUpdate = isHumanMove ? "computer" : "human";
 
     try {
       if (!isHumanMove && cell === null) {
-        cell = GridHelper.getRandomCell();
+        cell = humansBoard.getComputerMove()
       }
+    
+    const targetCell = opponentsBoard.getCell(cell);
+    if (targetCell.attacked === true) {
+      console.warn(`Cell ${cell} was already attacked; ignoring duplicate move.`);
+      return;
+    }
+
       opponentsBoard.receiveAttack(cell);
       UIController.displayBoard(this, opponentsBoard, boardOwnerTypeToUpdate);
 
@@ -80,7 +86,7 @@ export class Game {
       UIController.displayTurn(this.getActivePlayer());
 
       if (this.getActivePlayer() === "computer") {
-        setTimeout(() => this.processMove("computer", null), 500);
+        setTimeout(() => this.processMove("computer", null), 200);
       }
 
       return null;
@@ -98,7 +104,7 @@ export class Game {
   startGame() {
     // ui signify humans turn:
     UIController.displayTurn(this.getActivePlayer());
-    const computersBoard = this.getHumanPlayer().getBoard();
+    const computersBoard = this.getComputerPlayer().getBoard();
     UIController.addComputerBoardListeners(this, computersBoard);
     // place attack
     // evaluate win
