@@ -48,11 +48,51 @@ h1#logo-type {
   background-color: rgba(255, 255, 255, 0.579);
 }
 
+/* #################### Info section ######################### */
+div#info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.7rem;
+}
+
+section#dialogue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section#dialogue div {
+  display: flex;
+  align-items: center;
+  transform: translateX(4rem);
+}
+
+section#dialogue div p {
+  display: flex;
+  align-items: center;
+  height: 2rem; 
+  width: 15rem;
+  border-radius: 4px;
+  background-color: rgb(224, 223, 223);
+  padding-left: 0.8rem;
+}
+
+section#dialogue button {
+  width: 7rem;
+  height: 1.7rem;
+  margin-left: 1rem;
+}
+
+section#computer-fleet {
+  margin-left: 4rem;
+  transform: translateX(4rem);
+}
+
 /* #################### Fleet section ######################### */
-#human-fleet > h5, #computer-fleet > h5 {
+/* #human-fleet > h5, #computer-fleet > h5 {
   margin: 0;
   margin-bottom: 0.2rem;
-}
+} */
 
 /* 5x5 Grid Layout */
 .fleet-grid {
@@ -96,47 +136,6 @@ h1#logo-type {
 .destroyer:nth-child(16) { grid-column: 1; grid-row: 5; }
 .destroyer:nth-child(17) { grid-column: 2; grid-row: 5; }
 
-/* #################### Info section ######################### */
-div#info {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 0.7rem;
-}
-
-section#dialogue {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-section#dialogue div {
-  display: flex;
-  align-items: center;
-  transform: translateX(4rem);
-}
-
-section#dialogue div p {
-  display: flex;
-  align-items: center;
-  height: 2rem; 
-  width: 15rem;
-  border-radius: 4px;
-  background-color: rgb(224, 223, 223);
-  padding-left: 0.8rem;
-}
-
-section#dialogue button {
-  width: 7rem;
-  height: 1.7rem;
-  margin-left: 1rem;
-}
-
-section#computer-fleet {
-  margin-left: 4rem;
-  transform: translateX(4rem);
-}
-
-
 /* #################### Boards section ######################### */
 #boards {
   display: flex;
@@ -150,6 +149,11 @@ section#computer-fleet {
   grid-template-columns: auto repeat(10, 1fr);
   grid-template-rows: auto repeat(10, 1fr);
   max-width: 25rem;
+}
+
+.board-header {
+  display: flex;
+  justify-content: space-around;
 }
 
 .board-title {

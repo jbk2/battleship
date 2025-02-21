@@ -1,5 +1,6 @@
 import _board from '../views/partials/_board.html'
 import { Game } from '../components/game.js'
+import _fleet_grid  from '../views/partials/_fleet_grid.html'
 
 export class UIController {
   static displayBoard(game, board, playerType) {
@@ -11,12 +12,6 @@ export class UIController {
     boardElement.innerHTML = '';
     boardElement.insertAdjacentHTML('beforeend', _board);
     boardElement.querySelector('.board-title').innerText = titleString;
-    // if(playerType === 'human') {
-    //   boardElement.querySelector('.board-title').style.textAlign = 'left';
-    //   boardElement.querySelector('.board-title').style.marginLeft = '2.6rem';
-    // } else {
-    //   boardElement.querySelector('.board-title').style.textAlign = 'right';
-    // }
     const grid = board.getGrid();
 
     for(let row in grid) {
@@ -92,5 +87,11 @@ export class UIController {
 
   static displayWin(winner) {
 
+  }
+
+  static displayFleet(playerType) {
+    const playerBoardHeader = document.querySelector(`#${playerType}s-board .board-header`)
+    console.log(playerBoardHeader);
+    playerBoardHeader.insertAdjacentHTML('beforeend', _fleet_grid)
   }
 }
