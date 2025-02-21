@@ -15,7 +15,6 @@ export class Game {
   setPlayers() {
     this.#humanPlayer = new Player("human");
     this.#computerPlayer = new Player("computer");
-    // populate their boards
     const humansBoard = this.getHumanPlayer().getBoard();
     const computersBoard = this.getComputerPlayer().getBoard();
     humansBoard.populateBoard();
@@ -48,7 +47,8 @@ export class Game {
   processMove(playerType, cell = null) {
     if (this.getActivePlayer() != playerType) {
       throw new Error(
-        `activePlayer is '${this.getActivePlayer()}', activePlayer must be '${playerType}' for a '${playerType}' to attack`
+        `activePlayer is '${this.getActivePlayer()}', ` +
+        `activePlayer must be '${playerType}' for a '${playerType}' to attack`
       );
     }
 
@@ -59,26 +59,18 @@ export class Game {
     const boardOwnerTypeToUpdate = isHumanMove ? "computer" : "human";
 
     try {
-      if (!isHumanMove && cell === null) {
-        cell = humansBoard.getComputerMove()
-      }
-    
-    const targetCell = opponentsBoard.getCell(cell);
-    if (targetCell.attacked === true) {
-      console.warn(`Cell ${cell} was already attacked; ignoring duplicate move.`);
-      return;
-    }
+      if (!isHumanMove && cell === null) { cell = humansBoard.getComputerMove() };
 
       opponentsBoard.receiveAttack(cell);
       UIController.displayBoard(this, opponentsBoard, boardOwnerTypeToUpdate);
 
-      if (!isHumanMove) {
-        UIController.addComputerBoardListeners(this, computersBoard);
-      } else if (isHumanMove) {
-        UIController.removeComputerBoardListeners(computersBoard);
-      }
+      isHumanMove ? UIController.removeComputerBoardListeners(computersBoard)
+        : UIController.addComputerBoardListeners(this, computersBoard);
 
       if (this.checkWin(opponentsBoard)) {
+        if(!isHumanMove) { UIController.removeComputerBoardListeners(computersBoard) };
+        console.log(document.body.innerHTML);
+        UIController.displayWin(playerType);
         return `${playerType} wins`;
       }
 
@@ -96,23 +88,13 @@ export class Game {
     }
   }
 
-  // if true this needs to update UI, stop game, offer re-game
   checkWin(board) {
     return board.fleetSunk();
   }
 
   startGame() {
-    // ui signify humans turn:
     UIController.displayTurn(this.getActivePlayer());
     const computersBoard = this.getComputerPlayer().getBoard();
     UIController.addComputerBoardListeners(this, computersBoard);
-    // place attack
-    // evaluate win
-    // if win notify ui, stop game (remove computer baord event listeners)
-    // if no win
-    // ui signify computers turn, temporarily remove computer baord event listeners.
-    // make computer move
-    // place attack
-    // evaluate win
   }
 }

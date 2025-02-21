@@ -6,6 +6,7 @@ import { UIController } from '../ui/ui-controller.js';
 // Override UI methods to do nothing
 UIController.displayBoard = () => {};
 UIController.displayTurn = () => {};
+UIController.displayWin = () => {};
 UIController.addComputerBoardListeners = () => {};
 
 describe('Game', () => {
@@ -56,7 +57,8 @@ describe('Game', () => {
         const newGame = new Game();
         newGame.setActivePlayer('computer');
         expect(() => newGame.processMove('human', 'a1'))
-          .toThrowError(`activePlayer is '${newGame.getActivePlayer()}', activePlayer must be 'human' for a 'human' to attack`);
+          .toThrowError(`activePlayer is '${newGame.getActivePlayer()}', ` +
+          `activePlayer must be 'human' for a 'human' to attack`);
       })
       
       it('should toggle the active player after placing the attack', () => {
@@ -75,9 +77,6 @@ describe('Game', () => {
         const unSunkCell = computerPlayersBoard.unSinkFirstShip()
         expect(computerPlayersBoard.fleetSunk()).toBe(false)
         expect(newGame.processMove('human', unSunkCell)).toEqual('human wins');
-      })
-
-      it('should re-render the computers board', () => {
       })
     })
   })
@@ -106,7 +105,8 @@ describe('Game', () => {
       const humanPlayer = newGame.getHumanPlayer();
       const computerPlayer = newGame.getComputerPlayer();
       expect(() => {newGame.processMove('computer')})
-        .toThrowError(`activePlayer is '${newGame.getActivePlayer()}', activePlayer must be 'computer' for a 'computer' to attack`);
+        .toThrowError(`activePlayer is '${newGame.getActivePlayer()}', ` +
+        `activePlayer must be 'computer' for a 'computer' to attack`);
     })
 
     it('should toggle the active player after placing the attack', () => {

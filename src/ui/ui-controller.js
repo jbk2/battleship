@@ -37,9 +37,6 @@ export class UIController {
         }
       }
     }
-    // if(boardType === 'computer') {
-    //   UIController.addComputerBoardListeners(game, board);
-    // };
   }
 
   static addComputerBoardListeners(game, computerBoard) {
@@ -94,12 +91,11 @@ export class UIController {
   static displayTurn(player) {
     const dialogueEl = document.querySelector('section#dialogue > div > p');
     dialogueEl.innerText = `${player}'s turn...`;
-    console.log("DIALOG EL HERE ==>>", dialogueEl)
-    console.log("PLAYER HERE ==>>", player)
   }
 
   static displayWin(winner) {
-
+    const dialogueEl = document.querySelector('section#dialogue > div > p');
+    dialogueEl.innerText = `${winner}'s won!!! Congratulations`;
   }
 
   static displayFleet(playerType) {
