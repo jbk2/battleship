@@ -114,17 +114,6 @@ describe('Game', () => {
       newGame.processMove('computer');
       expect(newGame.getActivePlayer()).toBe('human');
     })
-
-    // it("declares computer the game winner if all humans's ships are sunk", () => {
-    //   const newGame = new Game();
-    //   const humanPlayer = newGame.getHumanPlayer();
-    //   const computerPlayer = newGame.getComputerPlayer();
-    //   const humanPlayersBoard = humanPlayer.getBoard();
-    //   humanPlayersBoard.sinkFleet();
-    //   newGame.setActivePlayer('computer')
-    //   jest.spyOn(GridHelper, "getRandomCell").mockReturnValue("a1");
-    //   expect(newGame.processMove('computer')).toEqual('computer wins');
-    // })
   })
 
   describe('checkWin()', () => {

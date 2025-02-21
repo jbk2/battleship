@@ -53,7 +53,6 @@ export class Game {
     const playersBoard = playerType === 'human' ? this.getComputerPlayer().getBoard() : this.getHumanPlayer().getBoard();
 
     try {
-      console.log(`processing ${playerType} move`)
       if(playerType === 'computer' && cell === null) {
         cell = GridHelper.getRandomCell();
       }
