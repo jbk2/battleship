@@ -60,24 +60,31 @@ export class Game {
 
     try {
       if (!isHumanMove && cell === null) { cell = humansBoard.getComputerMove() };
-
-      opponentsBoard.receiveAttack(cell);
+      
+      const attack = opponentsBoard.receiveAttack(cell)
+      const isHit = attack.hit
+      
       UIController.displayBoard(this, opponentsBoard, boardOwnerTypeToUpdate);
-
-      isHumanMove ? UIController.removeComputerBoardListeners(computersBoard)
-        : UIController.addComputerBoardListeners(this, computersBoard);
-
+      
       if (this.checkWin(opponentsBoard)) {
         if(!isHumanMove) { UIController.removeComputerBoardListeners(computersBoard) };
         UIController.displayWin(playerType);
         return `${playerType} wins`;
       }
 
-      this.toggleActivePlayer();
-      UIController.displayTurn(this.getActivePlayer());
-
-      if (this.getActivePlayer() === "computer") {
-        setTimeout(() => this.processMove("computer", null), 200);
+      if (isHit) {
+        if (isHumanMove) {
+          UIController.addComputerBoardListeners(this, computersBoard)
+          return;
+        } else {
+          setTimeout(() => this.processMove(playerType), 1000);
+          return;
+        }
+      } else {
+        this.toggleActivePlayer();
+        UIController.displayTurn(this.getActivePlayer());
+        isHumanMove ? setTimeout(() => this.processMove("computer", null), 1000)
+          : UIController.addComputerBoardListeners(this, computersBoard);
       }
 
       return null;

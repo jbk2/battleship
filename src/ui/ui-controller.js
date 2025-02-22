@@ -56,7 +56,7 @@ export class UIController {
         }
         const handleClick = (event) => {
           try {
-            console.log("attacking", cellKey)
+            // console.log("attacking", cellKey)
             game.processMove('human', cellKey)
           } catch (error) {
             console.log(error);
