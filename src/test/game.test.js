@@ -63,9 +63,25 @@ describe('Game', () => {
       
       it('should toggle the active player after placing the attack', () => {
         const newGame = new Game();
-    
         expect(newGame.getActivePlayer()).toBe('human');
         newGame.processMove('human', 'a1');
+        expect(newGame.getActivePlayer()).toBe('computer');
+      })
+
+      it("allows a 2nd attack if a ship was hit", () => {
+        const newGame = new Game();
+        const computerPlayersBoard = newGame.getComputerPlayer().getBoard();
+        const firstComputerShipId = Object.keys(computerPlayersBoard.getShips())[0];
+        const firstComputerShipsCells = GridHelper
+          .getShipsCells(computerPlayersBoard.getGrid(), firstComputerShipId);
+        const emptyCellCoord = GridHelper.getEmptyCells(computerPlayersBoard.getGrid())[0].position;
+
+        expect(newGame.getActivePlayer()).toBe('human');
+        newGame.processMove('human', firstComputerShipsCells[0]);
+        expect(newGame.getActivePlayer()).toBe('human');
+        newGame.processMove('human', firstComputerShipsCells[1]);
+        expect(newGame.getActivePlayer()).toBe('human');
+        newGame.processMove('human', emptyCellCoord);
         expect(newGame.getActivePlayer()).toBe('computer');
       })
 
@@ -111,10 +127,29 @@ describe('Game', () => {
 
     it('should toggle the active player after placing the attack', () => {
       const newGame = new Game();
-      const computerPlayer = newGame.getComputerPlayer();
+      const humanPlayersBoard = newGame.getHumanPlayer().getBoard();
+      const emptyCell = GridHelper.getEmptyCells(humanPlayersBoard.getGrid())[0].position;
       newGame.setActivePlayer('computer');
       expect(newGame.getActivePlayer()).toBe('computer');
-      newGame.processMove('computer');
+      newGame.processMove('computer', emptyCell);
+      expect(newGame.getActivePlayer()).toBe('human');
+    })
+
+    it("allows a 2nd attack if a ship was hit", () => {
+      const newGame = new Game();
+      const humanPlayersBoard = newGame.getHumanPlayer().getBoard();
+      const firstHumanShipId = Object.keys(humanPlayersBoard.getShips())[0];
+      const firstHumanShipsCells = GridHelper
+        .getShipsCells(humanPlayersBoard.getGrid(), firstHumanShipId);
+      const emptyCellCoord = GridHelper.getEmptyCells(humanPlayersBoard.getGrid())[0].position;
+
+      newGame.setActivePlayer('computer');
+      expect(newGame.getActivePlayer()).toBe('computer');
+      newGame.processMove('computer', firstHumanShipsCells[0]);
+      expect(newGame.getActivePlayer()).toBe('computer');
+      newGame.processMove('computer', firstHumanShipsCells[1]);
+      expect(newGame.getActivePlayer()).toBe('computer');
+      newGame.processMove('computer', emptyCellCoord);
       expect(newGame.getActivePlayer()).toBe('human');
     })
 

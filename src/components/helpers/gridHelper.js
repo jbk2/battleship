@@ -84,8 +84,9 @@ export class GridHelper {
     // console.log(grid)
     const emptyCells = []
     for(const [row, columns] of Object.entries(grid)) {
-      for(const [col, cell] of Object.entries(columns)) {
-        if(cell.shipId === null) { emptyCells.push(cell) } 
+      for(const [col, cellObj] of Object.entries(columns)) {
+        const cellItem = { position: `${row}${col}`, cell: cellObj }
+        if(cellObj.shipId === null) { emptyCells.push(cellItem) } 
         // emptyCells.push(`Cell: ${row}${col}, Attacked: ${cell.attacked}, Ship ID: ${cell.shipId}`);
       }
     }
