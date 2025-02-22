@@ -37,6 +37,14 @@ export class UIController {
         }
       }
     }
+
+    if (playerType === 'human') {
+      const reloadBtn = document.createElement('button');
+      reloadBtn.innerText = "Re-position fleet";
+      reloadBtn.id = "reload-btn";
+      reloadBtn.addEventListener("click", () => location.reload());
+      boardElement.appendChild(reloadBtn);
+    }
   }
 
   static addComputerBoardListeners(game, computerBoard) {

@@ -197,3 +197,11 @@ section#computer-fleet {
 .board td.sunk {
   box-shadow: inset 0 0 0 2px red;
 }
+
+#reload-btn {
+  display: block;
+  margin: 2rem auto;
+  /* margin-left: auto;
+  margin-right: auto; */
+  /* justify-self: center; */
+}
