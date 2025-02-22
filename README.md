@@ -27,10 +27,9 @@ A JS implementation of the classic Battleship game built with TDD via Jest.
 5. Open your browser and navigate to `http://localhost:8080/` to play the game.
 
 ### Todos:
-- build in 2nd turn on hit
 - improve UI
 - intro computer move logic to hit near to existing hits
-- Add randomise fleet position button 
+  - tie to 'easy mode' 'simple mode' toggle switch.
 - capture match game scores
 - write up presentable README
 - deploy to ec2 server
