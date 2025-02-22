@@ -82,7 +82,7 @@ export class Game {
           UIController.addComputerBoardListeners(this, computersBoard)
           return;
         } else {
-          setTimeout(() => this.processMove(playerType), 1000);
+          setTimeout(() => this.processMove(playerType), 400);
           return;
         }
       }

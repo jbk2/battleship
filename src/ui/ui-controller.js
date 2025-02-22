@@ -58,6 +58,7 @@ export class UIController {
         const cellKey = `${row}${col}`
         const handleMouseOver = (event) => {
           cellEl.style.backgroundColor = 'lightpink';
+          cellEl.style.cursor = 'pointer';
         }
         const handleMouseOut = (event) => {
           cellEl.style.backgroundColor = '';
@@ -98,7 +99,8 @@ export class UIController {
 
   static displayTurn(player) {
     const dialogueEl = document.querySelector('section#dialogue > div > p');
-    dialogueEl.innerText = `${player}'s turn...`;
+    dialogueEl.innerText = '...';
+    setTimeout(()=> dialogueEl.innerText = `${player}'s turn...`, 50);
   }
 
   static displayWin(winner) {
@@ -121,4 +123,22 @@ export class UIController {
       }
     })
   }
+
+  static launchConfetti() {
+    const confettiContainer = document.querySelector('.confetti-container');
+    confettiContainer.innerHTML = ''; // Clear previous confetti
+  
+    const confettiCount = 120;
+  
+    for (let i = 0; i < confettiCount; i++) {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti-piece');
+      
+      // Random horizontal position and slight staggered delay
+      confetti.style.left = `${Math.random() * 100}vw`;
+      confetti.style.top = `${Math.random() * -120 - 30}vh`;
+      confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+  
+      confettiContainer.appendChild(confetti);
+    }
 }
