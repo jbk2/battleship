@@ -59,8 +59,9 @@ export class Game {
     const boardOwnerTypeToUpdate = isHumanMove ? "computer" : "human";
 
     try {
-      if (!isHumanMove && cell === null) { cell = humansBoard.getComputerMove() };
-      
+      if (!isHumanMove && cell === null) {
+        cell = humansBoard.getComputerMove()
+      };
       const attack = opponentsBoard.receiveAttack(cell)
       const isHit = attack.hit
       
@@ -80,13 +81,17 @@ export class Game {
           setTimeout(() => this.processMove(playerType), 1000);
           return;
         }
-      } else {
-        this.toggleActivePlayer();
-        UIController.displayTurn(this.getActivePlayer());
-        isHumanMove ? setTimeout(() => this.processMove("computer", null), 1000)
-          : UIController.addComputerBoardListeners(this, computersBoard);
       }
+      
+      this.toggleActivePlayer();
+      UIController.displayTurn(this.getActivePlayer());
 
+      if (this.getActivePlayer() === 'computer') {
+        setTimeout(() => this.processMove("computer", null), 1000)
+      } else {
+        UIController.addComputerBoardListeners(this, computersBoard);
+      }
+      
       return null;
     } catch (error) {
       console.log(`was an error trying to call #receiveAttack(${cell})`, error);
