@@ -44,7 +44,7 @@ export class Game {
     return this.#computerPlayer;
   }
 
-  processMove(playerType, cell = null) {
+  async processMove(playerType, cell = null) {
     if (this.getActivePlayer() != playerType) {
       throw new Error(
         `activePlayer is '${this.getActivePlayer()}', ` +
@@ -57,6 +57,8 @@ export class Game {
     const humansBoard = this.getHumanPlayer().getBoard();
     const opponentsBoard = isHumanMove ? computersBoard : humansBoard;
     const boardOwnerTypeToUpdate = isHumanMove ? "computer" : "human";
+
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     try {
       if (!isHumanMove && cell === null) {
@@ -73,6 +75,8 @@ export class Game {
         return `${playerType} wins`;
       }
 
+      await sleep(250);
+
       if (isHit) {
         if (isHumanMove) {
           UIController.addComputerBoardListeners(this, computersBoard)
@@ -87,7 +91,7 @@ export class Game {
       UIController.displayTurn(this.getActivePlayer());
 
       if (this.getActivePlayer() === 'computer') {
-        setTimeout(() => this.processMove("computer", null), 1000)
+        setTimeout(() => this.processMove("computer", null), 500)
       } else {
         UIController.addComputerBoardListeners(this, computersBoard);
       }
