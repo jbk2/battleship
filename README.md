@@ -25,7 +25,7 @@ A JS implementation of the classic Battleship game built with TDD via Jest.
 
 ## Usage instructions:
 ### - Play online
-1. Open your browser and navigate to [Battleship Game](https://battleship-game-odin.netlify.app/).
+1. Open your browser and navigate to [Battleship Game](https://battleship.../).
 2. Click 'Play' to start the game.
 
 ### - Clone and run locally
@@ -37,9 +37,9 @@ A JS implementation of the classic Battleship game built with TDD via Jest.
 
 ### Todos:
 - update logic so that ships cannot be placed next to each other.
-- capture match game scores
-- write up presentable README
-- deploy to ec2 server
+- capture match game scores.
+- write up presentable README.
+- deploy to ec2 server.
 
 ## Future improvements
 - implement human player drag and drop ship placement

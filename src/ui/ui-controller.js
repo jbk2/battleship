@@ -105,7 +105,8 @@ export class UIController {
 
   static displayWin(winner) {
     const dialogueEl = document.querySelector('section#dialogue > div > p');
-    dialogueEl.innerText = `🎉🎉  ${winner} won.  🎉🎉`;
+    window.scrollTo({ top: 0, behavior: 'smooth'});
+    dialogueEl.innerText = `🎉  ${winner} won.  🎉`;
     dialogueEl.classList.add('win');
   }
 
