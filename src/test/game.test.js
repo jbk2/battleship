@@ -8,6 +8,7 @@ UIController.displayBoard = () => {};
 UIController.displayTurn = () => {};
 UIController.displayWin = () => {};
 UIController.addComputerBoardListeners = () => {};
+UIController.launchConfetti = () => {};
 
 describe('Game', () => {
   describe('instantiaing a game', () => {
