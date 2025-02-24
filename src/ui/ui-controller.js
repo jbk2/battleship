@@ -105,7 +105,7 @@ export class UIController {
 
   static displayWin(winner) {
     const dialogueEl = document.querySelector('section#dialogue > div > p');
-    dialogueEl.innerText = `${winner}'s won!!! Congratulations`;
+    dialogueEl.innerText = `🎉🎉  ${winner} won.  🎉🎉`;
     dialogueEl.classList.add('win');
   }
 
