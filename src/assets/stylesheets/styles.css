@@ -23,6 +23,11 @@
   header {
     justify-content: center;
   }
+
+  .board-header {
+    justify-content: space-around !important;
+  }
+
 }
 
 body {
