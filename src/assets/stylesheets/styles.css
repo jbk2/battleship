@@ -10,9 +10,17 @@
     align-items: center;
   }
 }
-@media (max-width: 600px) {
-  div #info {
-    justify-content: flex-start;
+@media (max-width: 550px) {
+  section#dialogue {
+    justify-content: flex-start !important;
+  }
+
+  section#dialogue div {
+    transform: translateX(0.1rem);
+  }
+  
+  header {
+    justify-content: center;
   }
 }
 
@@ -29,7 +37,6 @@ h3 {
 
 header {
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   height: 4.3rem;  
   --s: 4px; /* control the size*/
@@ -71,17 +78,10 @@ h1#logo-type span {
 }
 
 /* #################### Info section ######################### */
-div#info {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 0.7rem;
-}
-
 section#dialogue {
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 }
 section#dialogue div {
   display: flex;
