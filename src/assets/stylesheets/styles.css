@@ -13,10 +13,19 @@
 @media (max-width: 550px) {
   section#dialogue {
     justify-content: flex-start !important;
+    border: 2px, solid, red;
   }
-
+  
   section#dialogue div {
-    transform: translateX(0.1rem);
+    /* justify-self: center !important; */
+    /* transform: translateX(3rem); */
+    border: 2px, solid, red;
+  }
+  
+  #info > p {
+    padding: 0.2rem !important;
+    border: 2px, solid, red;
+    width: 10rem;
   }
   
   header {
