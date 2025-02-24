@@ -7,17 +7,16 @@
   #boards {
     flex-direction: column;
     gap: 0px !important;
-    align-items: center;
+    align-items: flex-start;
   }
 }
 @media (max-width: 550px) {
   section#dialogue {
     justify-content: flex-start !important;
-    border: 2px, solid, red;
   }
   
   #info > p {
-    padding: 0.2rem !important;
+    padding-left: 0.6rem !important;
     width: 10rem;
   }
   
