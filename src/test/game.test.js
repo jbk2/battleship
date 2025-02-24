@@ -43,32 +43,43 @@ describe('Game', () => {
   describe('processHumanMove()', () => {
     describe('a human player attacking a computer player', () => {
       
-      it("should place the attack on the computer player's board", () => {
+      it("should place the attack on the computer player's board", async () => {
         const newGame = new Game();
         const computerPlayersBoard = newGame.getComputerPlayer().getBoard();
         const computerPlayersA1Cell = computerPlayersBoard.getCell('a1');
         
         expect(computerPlayersA1Cell.attacked).toBe(false);
-        newGame.processMove('human', 'a1');
+        await newGame.processMove('human', 'a1');
         expect(computerPlayersA1Cell.attacked).toBe(true);
       })
 
-      it('should not place the attack if it is not the activePlayer', () => {
+      // it('should not place the attack if it is not the activePlayer', async () => {
+      //   const newGame = new Game();
+      //   newGame.setActivePlayer('computer');
+      //   await expect(() => newGame.processMove('human', 'a1'))
+      //     .rejects.toThrowError(`activePlayer is '${newGame.getActivePlayer()}', ` +
+      //     `activePlayer must be 'human' for a 'human' to attack`);
+      // })
+
+      it('should not place the attack if it is not the activePlayer', async () => {
         const newGame = new Game();
         newGame.setActivePlayer('computer');
-        expect(() => newGame.processMove('human', 'a1'))
-          .toThrowError(`activePlayer is '${newGame.getActivePlayer()}', ` +
-          `activePlayer must be 'human' for a 'human' to attack`);
-      })
+        await expect(newGame.processMove('human', 'a1'))
+            .rejects.toThrowError(
+                `activePlayer is '${newGame.getActivePlayer()}', ` +
+                `activePlayer must be 'human' for a 'human' to attack`
+            );
+      });
+    
       
-      it('should toggle the active player after placing the attack', () => {
+      it('should toggle the active player after placing the attack', async () => {
         const newGame = new Game();
         expect(newGame.getActivePlayer()).toBe('human');
-        newGame.processMove('human', 'a1');
+        await newGame.processMove('human', 'a1');
         expect(newGame.getActivePlayer()).toBe('computer');
       })
 
-      it("allows a 2nd attack if a ship was hit", () => {
+      it("allows a 2nd attack if a ship was hit", async () => {
         const newGame = new Game();
         const computerPlayersBoard = newGame.getComputerPlayer().getBoard();
         const firstComputerShipId = Object.keys(computerPlayersBoard.getShips())[0];
@@ -77,29 +88,29 @@ describe('Game', () => {
         const emptyCellCoord = GridHelper.getEmptyCells(computerPlayersBoard.getGrid())[0].position;
 
         expect(newGame.getActivePlayer()).toBe('human');
-        newGame.processMove('human', firstComputerShipsCells[0]);
+        await newGame.processMove('human', firstComputerShipsCells[0]);
         expect(newGame.getActivePlayer()).toBe('human');
-        newGame.processMove('human', firstComputerShipsCells[1]);
+        await newGame.processMove('human', firstComputerShipsCells[1]);
         expect(newGame.getActivePlayer()).toBe('human');
-        newGame.processMove('human', emptyCellCoord);
+        await newGame.processMove('human', emptyCellCoord);
         expect(newGame.getActivePlayer()).toBe('computer');
       })
 
-      it("declares human the game winner if all computer's ships are sunk", () => {
+      it("declares human the game winner if all computer's ships are sunk", async () => {
         const newGame = new Game();
         const computerPlayersBoard = newGame.getComputerPlayer().getBoard();
         computerPlayersBoard.sinkFleet();
         expect(computerPlayersBoard.fleetSunk()).toBe(true)
         const unSunkCell = computerPlayersBoard.unSinkFirstShip()
         expect(computerPlayersBoard.fleetSunk()).toBe(false)
-        expect(newGame.processMove('human', unSunkCell)).toEqual('human wins');
+        await expect(newGame.processMove('human', unSunkCell)).resolves.toEqual('human wins');
       })
     })
   })
 
   describe('processComputerMove()', () => {
     describe('a computer player attacking a human player', () => {
-      it("should place the attack on the computer player's board", () => {
+      it("should place the attack on the computer player's board", async() => {
         const newGame = new Game();
         const humanPlayersBoard = newGame.getHumanPlayer().getBoard();
         newGame.setActivePlayer('computer');
@@ -108,7 +119,7 @@ describe('Game', () => {
           .filter(cell => cell.attacked);
         expect(preAttackCells.length).toBe(0);
 
-        newGame.processMove('computer');
+        await newGame.processMove('computer');
         const postAttackCells = Object.values(humanPlayersBoard.getGrid())
           .flatMap(row => Object.values(row))
           .filter(cell => cell.attacked);
@@ -116,26 +127,26 @@ describe('Game', () => {
       })
     })
 
-    it('should not place the attack if it is not the activePlayer', () => {
+    it('should not place the attack if it is not the activePlayer', async () => {
       const newGame = new Game();
       const humanPlayer = newGame.getHumanPlayer();
       const computerPlayer = newGame.getComputerPlayer();
-      expect(() => {newGame.processMove('computer')})
-        .toThrowError(`activePlayer is '${newGame.getActivePlayer()}', ` +
+      await expect(newGame.processMove('computer'))
+        .rejects.toThrowError(`activePlayer is '${newGame.getActivePlayer()}', ` +
         `activePlayer must be 'computer' for a 'computer' to attack`);
     })
 
-    it('should toggle the active player after placing the attack', () => {
+    it('should toggle the active player after placing the attack', async () => {
       const newGame = new Game();
       const humanPlayersBoard = newGame.getHumanPlayer().getBoard();
       const emptyCell = GridHelper.getEmptyCells(humanPlayersBoard.getGrid())[0].position;
       newGame.setActivePlayer('computer');
       expect(newGame.getActivePlayer()).toBe('computer');
-      newGame.processMove('computer', emptyCell);
+      await newGame.processMove('computer', emptyCell);
       expect(newGame.getActivePlayer()).toBe('human');
     })
 
-    it("allows a 2nd attack if a ship was hit", () => {
+    it("allows a 2nd attack if a ship was hit", async () => {
       const newGame = new Game();
       const humanPlayersBoard = newGame.getHumanPlayer().getBoard();
       const firstHumanShipId = Object.keys(humanPlayersBoard.getShips())[0];
@@ -145,15 +156,15 @@ describe('Game', () => {
 
       newGame.setActivePlayer('computer');
       expect(newGame.getActivePlayer()).toBe('computer');
-      newGame.processMove('computer', firstHumanShipsCells[0]);
+      await newGame.processMove('computer', firstHumanShipsCells[0]);
       expect(newGame.getActivePlayer()).toBe('computer');
-      newGame.processMove('computer', firstHumanShipsCells[1]);
+      await newGame.processMove('computer', firstHumanShipsCells[1]);
       expect(newGame.getActivePlayer()).toBe('computer');
-      newGame.processMove('computer', emptyCellCoord);
+      await newGame.processMove('computer', emptyCellCoord);
       expect(newGame.getActivePlayer()).toBe('human');
     })
 
-    it("declares computer the game winner if all humans's ships are sunk", () => {
+    it("declares computer the game winner if all humans's ships are sunk", async () => {
       const newGame = new Game();
       const humanPlayer = newGame.getHumanPlayer();
       const humanPlayersBoard = humanPlayer.getBoard();
@@ -164,7 +175,7 @@ describe('Game', () => {
       expect(humanPlayersBoard.fleetSunk()).toBe(false)
 
       newGame.setActivePlayer('computer')
-      expect(newGame.processMove('computer', unSunkCell)).toEqual('computer wins');
+      await expect(newGame.processMove('computer', unSunkCell)).resolves.toEqual('computer wins');
     })
   })
 
