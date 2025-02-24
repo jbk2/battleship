@@ -8,7 +8,11 @@
     flex-direction: column;
     gap: 0px !important;
     align-items: center;
-    /* height: auto; */
+  }
+}
+@media (max-width: 600px) {
+  div #info {
+    justify-content: flex-start;
   }
 }
 
