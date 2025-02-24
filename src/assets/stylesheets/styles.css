@@ -90,10 +90,21 @@ section#dialogue div p {
   align-items: center;
   font-size: 1.2rem;
   height: 2rem; 
-  width: 15rem;
+  width: 16rem;
   border-radius: 4px;
   background-color: rgb(224, 223, 223);
   padding-left: 0.8rem;
+}
+
+@keyframes pulseText {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+  
+section#dialogue div p.win {
+  animation: pulseText 1s ease-in-out 3;
+  animation-fill-mode: both;
 }
 
 button {
@@ -227,8 +238,48 @@ section#computer-fleet {
   display: block;
   margin: 2rem auto;
   transform: translateX(1.5rem);
-
+  
   /* margin-left: auto;
   margin-right: auto; */
   /* justify-self: center; */
+}
+
+/* #################### Confetti section ######################### */
+@keyframes fall {
+  0% {
+    transform: translateY(5vh) rotate(0deg); /* Start above the viewport */
+  }
+  100% {
+    transform: translateY(250vh) rotate(900deg); /* End far below the viewport */
+  }
+}
+
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 14px;
+  opacity: 0.8;
+  animation: fall 2.7s linear forwards, rotate 1s linear infinite; /* Adjusted duration for full fall */
+  transform-origin: center;
+  pointer-events: none;
+  animation-fill-mode: forwards;
+}
+
+.confetti-container .confetti-piece:nth-child(odd) {
+  background-color: #ff6347;
+}
+
+.confetti-container .confetti-piece:nth-child(even) {
+  background-color: #3cb371;
 }

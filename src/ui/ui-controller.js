@@ -106,6 +106,7 @@ export class UIController {
   static displayWin(winner) {
     const dialogueEl = document.querySelector('section#dialogue > div > p');
     dialogueEl.innerText = `${winner}'s won!!! Congratulations`;
+    dialogueEl.classList.add('win');
   }
 
   static displayFleet(board, playerType) {
@@ -124,22 +125,24 @@ export class UIController {
     })
   }
 
-  // static launchConfetti() {
-  //   const confettiContainer = document.querySelector('.confetti-container');
-  //   confettiContainer.innerHTML = ''; // Clear previous confetti
+  static launchConfetti() {
+    console.log('launchConfetti started')
+    const confettiContainer = document.querySelector('.confetti-container');
+    console.log('confettiContainer = ', confettiContainer)
+    confettiContainer.innerHTML = ''; // Clear previous confetti
   
-  //   const confettiCount = 120;
+    const confettiCount = 120;
   
-  //   for (let i = 0; i < confettiCount; i++) {
-  //     const confetti = document.createElement('div');
-  //     confetti.classList.add('confetti-piece');
+    for (let i = 0; i < confettiCount; i++) {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti-piece');
       
-  //     // Random horizontal position and slight staggered delay
-  //     confetti.style.left = `${Math.random() * 100}vw`;
-  //     confetti.style.top = `${Math.random() * -120 - 30}vh`;
-  //     confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+      // Random horizontal position and slight staggered delay
+      confetti.style.left = `${Math.random() * 100}vw`;
+      confetti.style.top = `${Math.random() * -120 - 30}vh`;
+      confetti.style.animationDelay = `${Math.random() * 0.5}s`;
   
-  //     confettiContainer.appendChild(confetti);
-  //   }
-  // }
+      confettiContainer.appendChild(confetti);
+    }
+  }
 }

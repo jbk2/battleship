@@ -70,6 +70,7 @@ export class Game {
       UIController.displayBoard(this, opponentsBoard, boardOwnerTypeToUpdate);
       
       if (this.checkWin(opponentsBoard)) {
+        UIController.launchConfetti();
         if(!isHumanMove) { UIController.removeComputerBoardListeners(computersBoard) };
         UIController.displayWin(playerType);
         return `${playerType} wins`;
