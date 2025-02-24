@@ -62,6 +62,9 @@ export class Game {
 
     try {
       if (!isHumanMove && cell === null) {
+        // improve game's strategy here by passing a level number in
+        // which game in instantiated with
+        // cell = humansBoard.getComputerMove(1)
         cell = humansBoard.getComputerMove()
       };
       const attack = opponentsBoard.receiveAttack(cell)

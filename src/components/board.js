@@ -116,6 +116,10 @@ export class Board {
     // (and whether the cell has been tried by competitor yet?)
   }
 
+  // move imrpovement methods:
+  // level 1 - after a hit only select a valid neighbouring cell to the hit
+  // level 2 - after a hit, if hit did not sink ship, only select a valid neighbouring cell to the hit
+  // level 3 - select random valid cell with no neighbouring hits.
   getComputerMove() {
     let randCell;
     do {
