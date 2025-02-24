@@ -27,9 +27,19 @@ A JS implementation of the classic Battleship game built with TDD via Jest.
 5. Open your browser and navigate to `http://localhost:8080/` to play the game.
 
 ### Todos:
-- Get confetti win working
-- intro computer move logic to hit near to existing hits
-  - tie to 'easy mode' 'simple mode' toggle switch.
+- update logic so that ships cannot be placed next to each other.
 - capture match game scores
 - write up presentable README
 - deploy to ec2 server
+
+## Future improvements
+- implement human player drag and drop ship placement
+- improve computer move logic; easy, medium, hard modes
+- implement computer AI to play against
+- implement multiplayer mode
+
+
+
+
+
+
